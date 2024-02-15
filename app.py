@@ -3,6 +3,7 @@ import os
 import base64
 from requests import post, get
 import json
+from flask import Flask, render_template
 
 load_dotenv()
 
@@ -57,3 +58,18 @@ songs = get_songs_by_artist(token, artist_id)
 
 for idx, song in enumerate(songs):
     print(f"{idx + 1}. {song['name']}")
+
+
+
+# This is what connects the front end to the backend
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    #TODO use the API to get this data from the user
+    username = "jack ambery"
+    pfp = "img path"
+    return render_template('index.html', username=username, pfp=pfp)
+
+if __name__ == '__main__':
+    app.run(debug=True)
