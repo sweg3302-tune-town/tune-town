@@ -1,0 +1,61 @@
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header styles */
+.header {
+    background-color: #f0f0f0;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Profile picture styles */
+.header .profile-pic {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+/* Profile info styles */
+.header .profile-info {
+    margin-top: 20px;
+}
+
+/* Photo grid styles */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 20px;
+}
+
+/* Individual photo styles */
+.photo-grid .photo {
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+/* Photo image styles */
+.photo-grid .photo img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Footer styles */
+.footer {
+    background-color: #f0f0f0;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Footer link styles */
+.footer a {
+    margin-right: 10px;
+    color: #333;
+    text-decoration: none;
+}
