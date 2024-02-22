@@ -7,7 +7,6 @@ from spotipy.oauth2 import SpotifyOAuth
 load_dotenv()
 
 ## this code is retarded because it's caching everyones user auth in the .cache file
-
 client_id = os.getenv("CLIENT_ID")
 client_secret = os.getenv("CLIENT_SECRET")
 
@@ -19,7 +18,7 @@ app.secret_key = client_secret
 sp_oauth = SpotifyOAuth(
         client_id = os.getenv("CLIENT_ID"),
         client_secret = os.getenv("CLIENT_SECRET"),
-        redirect_uri = 'http://localhost:5001/callback',
+        redirect_uri = 'http://localhost:5000/callback',
         scope = 'user-library-read'
     )
 
@@ -66,27 +65,5 @@ def logout():
     return redirect('/')
 
 if __name__ == '__main__':
-    app.run(port=5001, debug=True)
+    app.run(port=5000, debug=True)
 
-
-# These were methods used before switching to Spotipy
-
-# def search_for_artist(token, artist_name):
-#     url = "https://api.spotify.com/v1/search"
-#     headers = get_auth_header(token)
-#     query = f"?q={artist_name}&type=artist&limit=1"
-
-#     query_url = url + query
-#     result = get(query_url, headers=headers)
-#     json_result = json.loads(result.content)["artists"]["items"]
-#     if len(json_result) == 0:
-#         print("No artists with this name exists...")
-#         return None
-#     return json_result[0]
-
-# def get_songs_by_artist(token, artist_id):
-#     url = f"https://api.spotify.com/v1/artists/{artist_id}/top-tracks?country=US"
-#     headers = get_auth_header(token)
-#     result = get(url, headers=headers)
-#     json_result = json.loads(result.content)["tracks"]
-#     return json_result
