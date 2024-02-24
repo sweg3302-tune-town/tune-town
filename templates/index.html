@@ -17,16 +17,11 @@
     </div>
 
     <div class="photo-grid">
+        {% for pic in pics %}
         <div class="photo">
-            <img src="/static/img/newyork.jpg" alt="Photo 1">
+            <img src= "{{ pic }}" alt="not found">    
         </div>
-        <div class="photo">
-            <img src="/static/img/paris.jpg" alt="Photo 2">
-        </div>
-        <div class="photo">
-            <img src="/static/img/tree.jpg" alt="Photo 3">
-        </div>
-        <!-- Add more photo divs as needed -->
+        {% endfor %}
     </div>
 
     <div class="footer">

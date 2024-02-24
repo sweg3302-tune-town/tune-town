@@ -6,7 +6,7 @@ from spotipy.oauth2 import SpotifyOAuth
 
 load_dotenv()
 
-## this code is retarded because it's caching everyones user auth in the .cache file
+# this code is retarded because it's caching everyones user auth in the .cache file
 client_id = os.getenv("CLIENT_ID")
 client_secret = os.getenv("CLIENT_SECRET")
 
@@ -19,7 +19,8 @@ sp_oauth = SpotifyOAuth(
         client_id = os.getenv("CLIENT_ID"),
         client_secret = os.getenv("CLIENT_SECRET"),
         redirect_uri = 'http://localhost:5000/callback',
-        scope = 'user-library-read'
+        scope = 'user-read-private user-top-read user-library-read',
+        cache_path=None
     )
 
 def htmlForLoginButton():
@@ -31,6 +32,7 @@ def getSPOauthURI():
     auth_url = sp_oauth.get_authorize_url()
     return auth_url
 
+# --- routes ---
 @app.route('/')
 def index():
   
@@ -43,11 +45,22 @@ def index():
     
     sp = spotipy.Spotify(auth=session['spotify_token_info']['access_token'])
     user_profile = sp.current_user()
+
+    # user variables
     username = user_profile['display_name']
-    # Get user's profile picture if available
     pfp = user_profile['images'][0]['url'] if user_profile['images'] else ''
     id = user_profile['id']  
-    return render_template('index.html', username=username, pfp=pfp, id=id)
+    topSongs = sp.current_user_top_tracks(limit=6)
+
+    pics = []
+    for song in topSongs['items']:
+        album_id = song['album']['id']
+        album_info = sp.album(album_id)
+        cover_art_url = album_info['images'][0]['url'] if len(album_info['images']) > 0 else None
+        pics.append(cover_art_url)
+        print(cover_art_url)
+    
+    return render_template('index.html', username=username, pfp=pfp, id=id, pics=pics)
 
 @app.route('/callback')
 def callback():
@@ -59,6 +72,7 @@ def callback():
     session['spotify_token_info'] = token_info
     return redirect('/')
 
+# TODO needs to be implemented
 @app.route('/logout')
 def logout():
     session['spotify_token_info'] = None
