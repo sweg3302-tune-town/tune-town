@@ -17,17 +17,19 @@
     </div>
 
     <div class="photo-grid">
-        {% for pic in pics %}
+        {% for pic, name in songData %}
         <div class="photo">
             <img src= "{{ pic }}" alt="not found">    
         </div>
+        <p>{{ name }}</p>
         {% endfor %}
     </div>
 
     <div class="footer">
-        <a href="#">Home</a>
-        <a href="#">Profile</a>
-        <a href="#">Settings</a>
+        <a href="/home">Home</a>
+        <a href="/profile">Profile</a>
+        <a href="/settings">Settings</a>
+        <a href="/logout">Logout</a>
     </div>
 </body>
 </html>

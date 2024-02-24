@@ -24,13 +24,9 @@ sp_oauth = SpotifyOAuth(
     )
 
 def htmlForLoginButton():
-    auth_url = getSPOauthURI()
+    auth_url = sp_oauth.get_authorize_url()
     htmlLoginButton = "<a href='" + auth_url + "'>Login to Spotify</a>"
     return htmlLoginButton
-
-def getSPOauthURI():
-    auth_url = sp_oauth.get_authorize_url()
-    return auth_url
 
 # --- routes ---
 @app.route('/')
@@ -50,25 +46,27 @@ def index():
     username = user_profile['display_name']
     pfp = user_profile['images'][0]['url'] if user_profile['images'] else ''
     id = user_profile['id']  
-    topSongs = sp.current_user_top_tracks(limit=6)
 
+    topSongs = sp.current_user_top_tracks(limit=6)
+    names = []
     pics = []
     for song in topSongs['items']:
+        names.append(song['name'])
         album_id = song['album']['id']
         album_info = sp.album(album_id)
         cover_art_url = album_info['images'][0]['url'] if len(album_info['images']) > 0 else None
         pics.append(cover_art_url)
-        print(cover_art_url)
+    songData = zip(pics, names)
     
-    return render_template('index.html', username=username, pfp=pfp, id=id, pics=pics)
+    return render_template('profile.html', username=username, pfp=pfp, id=id, songData=songData)
 
 @app.route('/callback')
 def callback():
     # Parse authorization response
     code = request.args.get('code')
-    print(str(code))
+    # print(str(code))
     token_info = sp_oauth.get_access_token(code)
-    print(token_info)
+    # print(token_info)
     session['spotify_token_info'] = token_info
     return redirect('/')
 
@@ -76,8 +74,12 @@ def callback():
 @app.route('/logout')
 def logout():
     session['spotify_token_info'] = None
-    return redirect('/')
+    session.clear()
+    return render_template('logout.html')
+
+@app.route('/home')
+def home():
+    return render_template('home.html')
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
-
