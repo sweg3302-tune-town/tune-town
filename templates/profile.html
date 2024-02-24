@@ -1,27 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TuneTown Profile</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/styles.css" />
 </head>
+
+<script>
+    // Get the image and audio element
+    // const musicPlayers = document.querySelectorAll('.musicPlayer');
+    // const playButtons = document.querySelectorAll('.playButton');
+
+    // // Add click event listener to the image
+    // playButtons.forEach((playButton, index) => {
+    //     playButton.addEventListener('click', function () {
+    //         // If audio is paused, play it; otherwise, pause it
+    //         const musicPlayer = musicPlayers[index];
+    //         if (musicPlayer.paused) {
+    //             musicPlayer.play();
+    //         } else {
+    //             musicPlayer.pause();
+    //         }
+    //     });
+    // });
+    // Function to play or pause audio
+    function toggleAudio(audioElement) {
+        if (audioElement.paused) {
+            audioElement.play();
+        } else {
+            audioElement.pause();
+        }
+    }
+</script>
+
 <body>
     <div class="header">
-        <img class="profile-pic" src="{{ pfp }}" alt="Profile Picture">
+        <img class="profile-pic" src="{{ pfp }}" alt="Profile Picture" />
         <div class="profile-info">
             <h2>{{ username }}</h2>
             <p>@{{ id }}</p>
-            <p>Bio: This is my TuneTown profile! I will post my favorite songs here!.</p>
+            <p>
+                Bio: This is my TuneTown profile! I will post my favorite songs here!.
+            </p>
         </div>
     </div>
 
     <div class="photo-grid">
-        {% for pic, name in songData %}
+        {% for pic, name, preview in songData %}
+        <!-- This div will be replaced with some kind of song card -->
         <div class="photo">
-            <img src= "{{ pic }}" alt="not found">    
+            <audio class="musicPlayer" src="{{ preview }}"></audio>
+            <img class="playButton" src="{{ pic }}" alt="not found" onclick="toggleAudio(this.previousElementSibling)">
         </div>
-        <p>{{ name }}</p>
         {% endfor %}
     </div>
 
@@ -32,4 +64,5 @@
         <a href="/logout">Logout</a>
     </div>
 </body>
+
 </html>
