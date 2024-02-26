@@ -6,6 +6,24 @@
     <title>TuneTown Profile</title>
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
+<div class="ttheader">
+    <div class="logo">
+        <img src="/static/img/tunetown.png" alt="logo">
+    </div>
+    <div class="tunetown-logo">TuneTown</div>
+    <div class="header-menu">
+        <a href="#">Profile</a>
+        <a href="#">About</a>
+        <a href="#">Discover</a>
+        <div class="search-box">
+            <form action="/search" method="get">
+                <input type="text" name="search" placeholder="Search...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 <body>
     <div class="header">
         <img class="profile-pic" src="{{ pfp }}" alt="Profile Picture">
@@ -28,6 +46,21 @@
         </div>
         <!-- Add more photo divs as needed -->
     </div>
+
+    <div class="musicnotes">
+        <div class="noot-1">
+        &#9835; &#9833;
+      </div>
+      <div class="noot-2">
+        &#9833;
+      </div>
+      <div class="noot-3">
+        &#9839; &#9834;
+      </div>
+      <div class="noot-4">
+        &#9834;
+      </div>
+      </div>
 
     <div class="footer">
         <a href="#">Home</a>
