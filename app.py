@@ -3,6 +3,7 @@ import os
 from flask import Flask, redirect, session, request, render_template
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+import logging
 
 load_dotenv()
 
@@ -14,12 +15,51 @@ client_secret = os.getenv("CLIENT_SECRET")
 app = Flask(__name__)
 app.secret_key = client_secret
 
+# logger = logging.getLogger(__name__)
+
+# class CacheHandler():
+#     """
+#     An abstraction layer for handling the caching and retrieval of
+#     authorization tokens.
+
+#     Custom extensions of this class must implement get_cached_token
+#     and save_token_to_cache methods with the same input and output
+#     structure as the CacheHandler class.
+#     """
+
+#     def get_cached_token(self):
+#         """
+#         Get and return a token_info dictionary object.
+#         """
+#         # return token_info
+#         raise NotImplementedError()
+
+#     def save_token_to_cache(self, token_info):
+#         """
+#         Save a token_info dictionary object to the cache and return None.
+#         """
+#         raise NotImplementedError()
+#         return None
+
+# class DummyCacheHandler(CacheHandler):
+#     """
+#     A dummy cache handler that does not store anything.
+#     """
+
+#     def get_cached_token(self):
+#         logger.debug("Token retrieval from dummy cache.")
+#         return None
+
+#     def save_token_to_cache(self, token_info):
+#         logger.debug("Token not saved to dummy cache.")
+
 # Initialize SpotifyOAuth object within the route
 sp_oauth = SpotifyOAuth(
         client_id = os.getenv("CLIENT_ID"),
         client_secret = os.getenv("CLIENT_SECRET"),
         redirect_uri = 'http://localhost:5000/callback',
-        scope = 'user-library-read'
+        scope = 'user-library-read',
+        cache_handler=DummyCacheHandler()
     )
 
 def htmlForLoginButton():
@@ -41,7 +81,8 @@ def index():
         # return redirect('/callback')
         return htmlForLoginButton()
     
-    sp = spotipy.Spotify(auth=session['spotify_token_info']['access_token'])
+    # sp = spotipy.Spotify(auth=session['spotify_token_info']['access_token'])
+    sp = spotipy.Spotify(auth_manager=sp_oauth)
     user_profile = sp.current_user()
     username = user_profile['display_name']
     # Get user's profile picture if available
