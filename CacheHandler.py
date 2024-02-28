@@ -1,5 +1,4 @@
 import logging
-from spotipy.util import CLIENT_CREDS_ENV_VARS
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +24,6 @@ class CacheHandler():
         Save a token_info dictionary object to the cache and return None.
         """
         raise NotImplementedError()
-        return None
 
 
 class FlaskSessionCacheHandler(CacheHandler):
@@ -43,7 +41,6 @@ class FlaskSessionCacheHandler(CacheHandler):
             token_info = self.session["token_info"]
         except KeyError:
             logger.debug("Token not found in the session")
-
         return token_info
 
     def save_token_to_cache(self, token_info):
@@ -51,3 +48,16 @@ class FlaskSessionCacheHandler(CacheHandler):
             self.session["token_info"] = token_info
         except Exception as e:
             logger.warning("Error saving token to cache: " + str(e))
+
+
+# class DummyCacheHandler(CacheHandler):
+#     """
+#     A dummy cache handler that does not store anything.
+#     """
+
+#     def get_cached_token(self):
+#         logger.debug("Token retrieval from dummy cache.")
+#         return None
+
+#     def save_token_to_cache(self, token_info):
+#         logger.debug("Token not saved to dummy cache.")
