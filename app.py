@@ -17,8 +17,8 @@ client_secret = os.getenv("CLIENT_SECRET")
 app = Flask(__name__)
 app.secret_key = client_secret
 
-session = requests.Session()
-myCacheHandler = FlaskSessionCacheHandler(session=session)
+# session = requests.Session()
+# myCacheHandler = FlaskSessionCacheHandler(session=session)
 
 # Initialize SpotifyOAuth object within the route
 sp_oauth = SpotifyOAuth(
@@ -26,8 +26,7 @@ sp_oauth = SpotifyOAuth(
         client_secret = os.getenv("CLIENT_SECRET"),
         redirect_uri = 'http://localhost:5000/callback',
         scope = 'user-read-private user-top-read user-library-read',
-        # cache_path=None
-        cache_handler=myCacheHandler
+        cache_path=None
     )
 
 def htmlForLoginButton():
