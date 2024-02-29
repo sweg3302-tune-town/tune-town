@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 import os
-from flask import Flask, redirect, session, request, render_template
+from flask import Flask, redirect, session, request, render_template, make_response
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
@@ -77,7 +77,8 @@ def callback():
 def logout():
     session['spotify_token_info'] = None
     session.clear()
-    return render_template('logout.html')
+    response =  render_template('logout.html')
+    return response
 
 @app.route('/home')
 def home():
