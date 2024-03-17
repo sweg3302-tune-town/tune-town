@@ -1,13 +1,70 @@
 /* Body styles */
 body {
-    font-family: Arial, sans-serif;
+    background-color: #68716a;
+    font-family: gill sans, sans-serif;
     margin: 0;
     padding: 0;
 }
 
+.ttheader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #68716a;
+    color: #fff;
+    padding: 10px;
+}
+
+.tunetown-logo {
+    font-size: 45px;
+}
+
+.logo {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+
+}
+
+.header-menu {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-left: auto;
+}
+
+.header-menu a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+}
+
+.search-box input[type="text"],
+.search-box button {
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+}
+
+.search-box input[type="text"] {
+    width: 200px;
+}
+
+.search-box button {
+    background-color: #fff;
+    color: #93C572;
+    cursor: pointer;
+}
+
 /* Header styles */
 .header {
-    background-color: #f0f0f0;
+    background-color: #1DB954;
     padding: 20px;
     text-align: center;
 }
@@ -31,6 +88,8 @@ body {
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
     padding: 20px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 /* Individual photo styles */
@@ -45,12 +104,75 @@ body {
     height: 200px;
     object-fit: cover;
 }
+  
+  .musicnotes {
+    display: block;
+    margin: auto;
+    position: relative;
+    width: 50%;
+    min-width: 300px;
+    height: 200px;
+    border: 0px solid #000;
+  }
+  
+  .noot-1,
+  .noot-2,
+  .noot-3,
+  .noot-4 {
+    position: absolute;
+    animation: notes 2s infinite linear;
+    font-size: 35px;
+    opacity: 0;
+  }
+  
+  .noot-1 {
+    top: 60px;
+    left: 0;
+    animation-delay: 0.5s;
+  }
+  
+  .noot-2 {
+    top: 30px;
+    left: 30%;
+    animation-delay: 1s;
+  }
+  
+  .noot-3 {
+    top: 90px;
+    left: 60%;
+    animation-delay: 1.5s;
+  }
+  
+  .noot-4 {
+    top: 40px;
+    left: 90%;
+    animation-delay: 2s;
+  }
+  
+  @keyframes notes {
+    0% {
+      transform: scale(1) translate(0, 0);
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.5) translate(50%, -50%);
+    }
+    80% {
+      opacity: 0;
+      transform: scale(1.5) translate(100%, -100%);
+    }
+    100% {
+      transform: scale(1.5) translate(100%, -100%);
+      opacity: 0;
+    }
+  }
 
 /* Footer styles */
 .footer {
-    background-color: #f0f0f0;
     padding: 20px;
     text-align: center;
+    
 }
 
 /* Footer link styles */
