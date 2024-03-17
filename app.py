@@ -66,19 +66,15 @@ def index():
 def callback():
     # Parse authorization response
     code = request.args.get('code')
-    # print(str(code))
     token_info = sp_oauth.get_access_token(code)
-    # print(token_info)
     session['spotify_token_info'] = token_info
     return redirect('/')
 
-# TODO needs to be implemented
 @app.route('/logout')
 def logout():
     session['spotify_token_info'] = None
     session.clear()
-    response =  render_template('logout.html')
-    return response
+    return render_template('logout.html')
 
 @app.route('/home')
 def home():
