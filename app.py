@@ -84,7 +84,7 @@ def logout():
 def home():
     return render_template('home.html')
 
-@app.rout('/friends')
+@app.route('/friends')
 def friends():
     class User:
         def __init__(self):
@@ -122,6 +122,22 @@ def friends():
                     self.friendship_dict[u.SpotifyHandle] = f.User2ID
 
             return self.friendship_dict
+        
+    class FriendModel:
+        def __init__(self):
+            self.logger = None
+
+        def on_get(self):
+            #db_context = DatabaseContext("Data Source=fairfielduniversity-4357-3260.database.windows.net;Database=SkiDatabase;Integrated Security=False;User ID=TestLogin;Password=SuperSecret52&&;Connection Timeout=30;")
+            db_context = DatabaseContext("data source=AUDREYS-PC;initial catalog=master;trusted_connection=true")
+            friendship_dict = db_context.return_friendship_dict()
+            return friendship_dict
+
+    friend_model = FriendModel()
+    # this might need to go in index, not sure rn
+    # need to creat friend html
+    friendship_dict = friend_model.on_get()
+    return render_template('friend.html', friendship_dict=friendship_dict)
 
 
 if __name__ == '__main__':
