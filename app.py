@@ -84,7 +84,7 @@ def logout():
 def home():
     return render_template('home.html')
 
-@app.rout('/friends')
+@app.route('/friends')
 def friends():
     class User:
         def __init__(self):
