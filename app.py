@@ -50,15 +50,17 @@ def index():
     topSongs = sp.current_user_top_tracks(limit=6)
     names = []
     pics = []
+    artists = []
     previews = []
     for song in topSongs['items']:
         names.append(song['name'])
         previews.append(song['preview_url'])
+        artists.append(song['artists']['name'])
         album_id = song['album']['id']
         album_info = sp.album(album_id)
         cover_art_url = album_info['images'][0]['url'] if len(album_info['images']) > 0 else None
         pics.append(cover_art_url)
-    songData = zip(pics, names, previews)
+    songData = zip(pics, names, artists, previews)
     
     return render_template('profile.html', username=username, pfp=pfp, id=id, songData=songData)
 
