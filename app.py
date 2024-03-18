@@ -3,6 +3,7 @@ import os
 from flask import Flask, redirect, session, request, render_template
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+import pyodbc
 
 load_dotenv()
 
@@ -82,6 +83,50 @@ def logout():
 @app.route('/home')
 def home():
     return render_template('home.html')
+
+@app.rout('/friends')
+def friends():
+    class User:
+        def __init__(self):
+            self.UserID = None
+            self.SpotifyHandle = None
+
+    class Friendship:
+        def __init__(self):
+            self.FriendshipID = None
+            self.User1ID = None
+            self.User2ID = None
+            self.DateFriended = None
+
+    class DatabaseContext:
+        def __init__(self, connection_string):
+            self.connection_string = connection_string
+            self.users = []
+            self.friendship_dict = {}
+
+        def return_friends(self):
+            with pyodbc.connect(self.connection_string) as connection:
+                cursor = connection.cursor()
+                query = """SELECT sm.SkiMountainID, sm.SkiMountainName, 
+                                CAST((SELECT  sl.SkiLiftName + ', ' 
+                                        FROM SkiLift sl 
+                                        WHERE sm.SkiMountainID = sl.SkiMountainID 
+                                        FOR XML PATH('')) as varchar(max)) as 'SkiLiftName' 
+                        FROM SkiMountain sm 
+                        INNER JOIN SkiLift sl ON sm.SkiMountainID = sl.SkiMountainID 
+                        GROUP BY sm.SkiMountainID, sm.SkiMountainName"""
+                cursor.execute(query)
+                rows = cursor.fetchall()
+                for row in rows:
+                    u = User()
+                    f = Friendship()
+                    u.UserID = row.UserID
+                    u.SpotifyHandle = row.SpotifyHandle
+                    f.User2ID = row.User2ID
+                    self.friendship_dict[u.SpotifyHandle] = f.User2ID
+
+            return self.friendship_dict
+
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
