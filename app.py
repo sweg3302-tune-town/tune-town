@@ -107,14 +107,10 @@ def friends():
         def return_friends(self):
             with pyodbc.connect(self.connection_string) as connection:
                 cursor = connection.cursor()
-                query = """SELECT sm.SkiMountainID, sm.SkiMountainName, 
-                                CAST((SELECT  sl.SkiLiftName + ', ' 
-                                        FROM SkiLift sl 
-                                        WHERE sm.SkiMountainID = sl.SkiMountainID 
-                                        FOR XML PATH('')) as varchar(max)) as 'SkiLiftName' 
-                        FROM SkiMountain sm 
-                        INNER JOIN SkiLift sl ON sm.SkiMountainID = sl.SkiMountainID 
-                        GROUP BY sm.SkiMountainID, sm.SkiMountainName"""
+                query = """SELECT u.UserID, u.SpotifyHandle, f.User2ID
+                        FROM Users u 
+                        INNER JOIN Friendships f ON u.UserID = f.User1ID 
+                        GROUP BY u.UserID, u.SpotifyHandle, f.User2ID"""
                 cursor.execute(query)
                 rows = cursor.fetchall()
                 for row in rows:
