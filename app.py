@@ -57,6 +57,7 @@ def index():
         previews.append(song['preview_url'])
         for artist in song['artists']:
             artists.append(artist['name'])
+            break # this makes sure only the first artist is appended
         album_id = song['album']['id']
         album_info = sp.album(album_id)
         cover_art_url = album_info['images'][0]['url'] if len(album_info['images']) > 0 else None

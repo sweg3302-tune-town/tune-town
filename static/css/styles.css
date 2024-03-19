@@ -1,29 +1,49 @@
+/* Color variables */
+/* https://coolors.co/121619-2d4739-09814a-a89f61-e5c78a */
+:root {
+  --background: #121619; /* Night */
+  --dark-color: #2d4739; /* Dark Green */
+  --primary: #09814a; /* Main Green */
+  --dark-accent: #a89f61; /* Dark Tan */
+  --light-accent: #e5c78a; /* Light Tan */
+}
+
 /* Body styles */
 body {
-  background-color: #68716a;
+  background-color: var(--background);
   font-family: gill sans, sans-serif;
   margin: 0;
   padding: 0;
 }
 
-.ttheader {
+.top-menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #68716a;
-  color: #fff;
+  background-color: var(--background);
+  color: var(--light-accent);
   padding: 10px;
 }
 
-.tunetown-logo {
+#tunetown-title {
   font-size: 45px;
 }
 
-.logo {
+.logo-box {
   display: flex;
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--light-accent);
+  overflow: hidden;
+  margin: 5px;
+}
+
+.logo-box img {
+  max-width: 80%;
+  max-height: 80%;
 }
 
 .header-menu {
@@ -35,7 +55,7 @@ body {
 
 .header-menu a {
   text-decoration: none;
-  color: #fff;
+  color: var(--light-accent);
   font-size: 16px;
 }
 
@@ -63,9 +83,14 @@ body {
 
 /* Header styles */
 .header {
-  background-color: #1db954;
+  background-color: var(--primary);
   padding: 20px;
   text-align: center;
+}
+h1 {
+  color: var(--light-accent);
+  font-size: 20px;
+  text-decoration: none;
 }
 
 /* Profile picture styles */
@@ -83,27 +108,33 @@ body {
 
 /* CARDS */
 .song-cards {
-  column-count: 3;
-  column-gap: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
   padding: 20px;
 }
 
 .song-card {
-  display: inline-block;
-  width: 100%; /* Each item spans the full width of the column */
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 225px; /* Each item spans the full width of the column */
+  margin: 24px;
+  padding: 24px;
+  background-color: var(--primary);
+  border-radius: 24px;
 }
 
 .song-img {
-  width: 200px;
+  width: 100%;
   object-fit: cover;
 }
 
 .song-img img {
-  width: 100%;
-  height: 200px;
+  height: 225px;
   border-radius: 24px;
-  box-shadow: 0 8px 8px #a18e97;
+  box-shadow: 0 8px 8px var(--light-accent);
   cursor: pointer;
   transition: transform 1s ease;
 
@@ -111,7 +142,7 @@ body {
 }
 
 .song-img :hover {
-  transform: scale(1.2);
+  transform: scale(1.05);
 }
 
 .song-cards h4 {
@@ -194,11 +225,12 @@ body {
 .footer {
   padding: 20px;
   text-align: center;
+  background-color: var(--dark-color);
 }
 
 /* Footer link styles */
 .footer a {
   margin-right: 10px;
-  color: #333;
+  color: var(--light-accent);
   text-decoration: none;
 }
