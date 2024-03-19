@@ -55,7 +55,8 @@ def index():
     for song in topSongs['items']:
         names.append(song['name'])
         previews.append(song['preview_url'])
-        artists.append(song['artists']['name'])
+        for artist in song['artists']:
+            artists.append(artist['name'])
         album_id = song['album']['id']
         album_info = sp.album(album_id)
         cover_art_url = album_info['images'][0]['url'] if len(album_info['images']) > 0 else None
