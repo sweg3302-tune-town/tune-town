@@ -39,13 +39,13 @@
   </div>
 
   <body>
-    <div class="header">
+    <div class="profile">
       <img class="profile-pic" src="{{ pfp }}" alt="Profile Picture" />
       <div class="profile-info">
         <h2>{{ username }}</h2>
-        <p>@{{ id }}</p>
+        <h3><a href="http://localhost:5000">@{{ id }}</a></h3>
         <p>
-          Bio: This is my TuneTown profile! I will post my favorite songs here!.
+          Bio: This is my TuneTown profile! I will post my favorite songs here!
         </p>
       </div>
     </div>
@@ -53,20 +53,28 @@
     <h1>These are the top songs I have been listening to recently:</h1>
     <div class="song-cards">
       {% for pic, name, artist, preview in songData %}
-      <div class="song-card">
-        <div class="song-img">
-          <audio class="musicPlayer" src="{{ preview }}"></audio>
-          <img
-            class="playButton"
-            src="{{ pic }}"
-            alt="not found"
-            onclick="toggleAudio(this.previousElementSibling)"
-          />
+      <div class="container">
+        <div class="left-box">
+          <div class="song-img">
+            <audio class="musicPlayer" src="{{ preview }}"></audio>
+            <img
+              class="playButton"
+              src="{{ pic }}"
+              alt="not found"
+              onclick="toggleAudio(this.previousElementSibling)"
+            />
+          </div>
         </div>
-        <h4>{{ name }}</h4>
-        <p>{{ artist }}</p>
+        <div class="right-box">
+          <div class="top-half">
+            <h2>{{ name }}</h2>
+          </div>
+          <div class="bottom-half">
+            <h5>{{ artist }}</h5>
+          </div>
+        </div>
       </div>
-      {% endfor %}
+    {% endfor %}
     </div>
 
     <div class="musicnotes">
@@ -84,3 +92,4 @@
     </div>
   </body>
 </html>
+

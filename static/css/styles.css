@@ -2,10 +2,10 @@
 /* https://coolors.co/121619-2d4739-09814a-a89f61-e5c78a */
 :root {
   --background: #121619; /* Night */
-  --dark-color: #2d4739; /* Dark Green */
-  --primary: #09814a; /* Main Green */
+  --dark-color: #3f3573; /* Dark Indigo */
+  --primary: #665aa6; /* Main Indigo */
   --dark-accent: #a89f61; /* Dark Tan */
-  --light-accent: #e5c78a; /* Light Tan */
+  --light-accent: #e3d8c2; /* Light Tan */
 }
 
 /* Body styles */
@@ -14,6 +14,7 @@ body {
   font-family: gill sans, sans-serif;
   margin: 0;
   padding: 0;
+  min-height: 100vh;
 }
 
 .top-menu {
@@ -75,26 +76,60 @@ body {
   width: 200px;
 }
 
-.search-box button {
-  background-color: #fff;
-  color: #93c572;
+.search-box button:hover {
+  background-color: var(--light-accent);
+  color: var(--primary);
+  cursor: pointer;
+}
+.search-box button:active {
+  background-color: #25a139;
+  color: var(--light-accent);
   cursor: pointer;
 }
 
-/* Header styles */
-.header {
+.search-box button {
   background-color: var(--primary);
+  color: var(--light-accent);
+  cursor: pointer;
+}
+
+
+
+/* Header styles */
+.profile {
+  background-color: var(--background);
   padding: 20px;
   text-align: center;
+  color: var(--light-accent);
 }
+
+.profile h3 {
+  color: var(--dark-color);
+  font-weight: normal;
+}
+
+.profile a {
+  color: var(--primary);
+  text-decoration: none;
+}
+.profile a:hover{
+  color: var(--dark-accent);
+  text-decoration: none;
+}
+.profile a:active{
+  color: #25a139;
+  text-decoration: none;
+}
+
 h1 {
   color: var(--light-accent);
   font-size: 20px;
   text-decoration: none;
+  margin-left: 20px;
 }
 
 /* Profile picture styles */
-.header .profile-pic {
+.profile .profile-pic {
   border-radius: 50%;
   width: 150px;
   height: 150px;
@@ -102,42 +137,53 @@ h1 {
 }
 
 /* Profile info styles */
-.header .profile-info {
+.profile .profile-info {
   margin-top: 20px;
 }
 
 /* CARDS */
 .song-cards {
   display: flex;
-  flex-direction: row;
+  background-color: var(--primary);
+/* flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 20px;
+  padding: 20px; */
+  max-height: 100%;
+  overflow-x: auto;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none; 
+}
+
+
+.song-cards .song-card {
+  min-width: 100%;
+  text-align: left;
+  background-color: var(--primary);
+}
+
+.song-cards::-webkit-scrollbar {
+  display: none;
 }
 
 .song-card {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 225px; /* Each item spans the full width of the column */
-  margin: 24px;
-  padding: 24px;
+  flex-direction: row;
+  align-items: left;
+  max-width: 100%;
   background-color: var(--primary);
-  border-radius: 24px;
 }
 
+
 .song-img {
-  width: 100%;
+  max-width: 100%;
   object-fit: cover;
 }
 
 .song-img img {
   height: 225px;
-  border-radius: 24px;
-  box-shadow: 0 8px 8px var(--light-accent);
   cursor: pointer;
   transition: transform 1s ease;
-
   overflow: hidden;
 }
 
@@ -145,17 +191,59 @@ h1 {
   transform: scale(1.05);
 }
 
-.song-cards h4 {
-  font-size: 14px;
-  margin-bottom: 0;
+.song-cards h2 {
+  font-size: 25px;
+  line-height: 1em;
+  color: var(--light-accent);
+  
 }
 
-.song-cards p {
-  margin-top: 5px;
-  font-size: 12px;
+.song-cards h5 {
+  margin: 0;
+  font-size: 20px;
   font-weight: 500;
-  color: rgb(168, 166, 166);
+  color: var(--dark-accent);
+  line-height: 1em;
 }
+
+.song-cards {
+  display: flex;
+  overflow-x: auto; /* Enable horizontal scrolling if needed */
+  padding: 20px; /* Add padding around the song cards */
+}
+
+
+
+/* Container styles */
+.container {
+  display: flex;
+  margin-right: 250px; /* Adjust spacing between song cards */
+  padding-right: 50px;
+}
+
+.container .left-box {
+  flex: 1;
+}
+
+.container .right-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  margin-bottom: 0;
+  min-width: 100%
+}
+
+.container .right-box .top-half {
+  margin: 0;
+  
+}
+
+.container .right-box .bottom-half {
+  margin: 0;
+
+}
+
 /* ----------------- */
 
 .musicnotes {
@@ -219,6 +307,24 @@ h1 {
     transform: scale(1.5) translate(100%, -100%);
     opacity: 0;
   }
+}
+
+
+/* makes every type of text unselectable except p */
+* {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: -moz-none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+p {
+  -webkit-user-select: text;
+  -khtml-user-select: text;
+  -moz-user-select: text;
+  -o-user-select: text;
+  user-select: text;
 }
 
 /* Footer styles */
