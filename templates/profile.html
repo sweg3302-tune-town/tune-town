@@ -1,85 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TuneTown Profile</title>
     <link rel="stylesheet" href="/static/css/styles.css" />
-</head>
+  </head>
 
-<script>
+  <script>
     // Function to play or pause audio
     function toggleAudio(audioElement) {
-        if (audioElement.paused) {
-            audioElement.play();
-        } else {
-            audioElement.pause();
-        }
+      if (audioElement.paused) {
+        audioElement.play();
+      } else {
+        audioElement.pause();
+      }
     }
-</script>
+  </script>
 
-<div class="ttheader">
-    <div class="logo">
-        <img src="/static/img/tunetown.png" alt="logo">
+  <div class="top-menu">
+
+    <div class="logo-box">
+      <img src="/static/img/tunetown.png" alt="logo" />
     </div>
-    <div class="tunetown-logo">TuneTown</div>
+
+    <div id="tunetown-title">TuneTown</div>
     <div class="header-menu">
-        <a href="#">Profile</a>
-        <a href="#">About</a>
-        <a href="#">Discover</a>
-        <div class="search-box">
-            <form action="/search" method="get">
-                <input type="text" name="search" placeholder="Search...">
-                <button type="submit">Search</button>
-            </form>
-        </div>
+      <a href="#">Profile</a>
+      <a href="#">About</a>
+      <a href="#">Discover</a>
+      <div class="search-box">
+        <form action="/search" method="get">
+          <input type="text" name="search" placeholder="Search..." />
+          <button type="submit">Search</button>
+        </form>
+      </div>
     </div>
-</div>
+  </div>
 
-<body>
+  <body>
     <div class="header">
-        <img class="profile-pic" src="{{ pfp }}" alt="Profile Picture" />
-        <div class="profile-info">
-            <h2>{{ username }}</h2>
-            <p>@{{ id }}</p>
-            <p>
-                Bio: This is my TuneTown profile! I will post my favorite songs here!.
-            </p>
-        </div>
+      <img class="profile-pic" src="{{ pfp }}" alt="Profile Picture" />
+      <div class="profile-info">
+        <h2>{{ username }}</h2>
+        <p>@{{ id }}</p>
+        <p>
+          Bio: This is my TuneTown profile! I will post my favorite songs here!.
+        </p>
+      </div>
     </div>
 
-    <div class="photo-grid">
-        {% for pic, name, preview in songData %}
-        <!-- This div will be replaced with some kind of song card -->
-        <div class="photo">
-            <audio class="musicPlayer" src="{{ preview }}"></audio>
-            <img class="playButton" src="{{ pic }}" alt="not found" onclick="toggleAudio(this.previousElementSibling)">
+    <h1>These are the top songs I have been listening to recently:</h1>
+    <div class="song-cards">
+      {% for pic, name, artist, preview in songData %}
+      <div class="song-card">
+        <div class="song-img">
+          <audio class="musicPlayer" src="{{ preview }}"></audio>
+          <img
+            class="playButton"
+            src="{{ pic }}"
+            alt="not found"
+            onclick="toggleAudio(this.previousElementSibling)"
+          />
         </div>
-        {% endfor %}
+        <h4>{{ name }}</h4>
+        <p>{{ artist }}</p>
+      </div>
+      {% endfor %}
     </div>
 
     <div class="musicnotes">
-        <div class="noot-1">
-        &#9835; &#9833;
-      </div>
-      <div class="noot-2">
-        &#9833;
-      </div>
-      <div class="noot-3">
-        &#9839; &#9834;
-      </div>
-      <div class="noot-4">
-        &#9834;
-      </div>
-      </div>
+      <div class="noot-1">&#9835; &#9833;</div>
+      <div class="noot-2">&#9833;</div>
+      <div class="noot-3">&#9839; &#9834;</div>
+      <div class="noot-4">&#9834;</div>
+    </div>
 
     <div class="footer">
-        <a href="/home">Home</a>
-        <a href="/profile">Profile</a>
-        <a href="/settings">Settings</a>
-        <a href="/logout">Logout</a>
+      <a href="/home">Home</a>
+      <a href="/profile">Profile</a>
+      <a href="/settings">Settings</a>
+      <a href="/logout">Logout</a>
     </div>
-</body>
-
+  </body>
 </html>
