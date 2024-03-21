@@ -3,6 +3,7 @@ import os
 from flask import Flask, redirect, session, request, render_template, make_response
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+import PySimpleGUI as sg
 
 load_dotenv()
 
@@ -79,6 +80,38 @@ def logout():
 @app.route('/home')
 def home():
     return render_template('home.html')
+
+def search_song(client):
+    """
+    Use the Spotify client to search for a song and retrieve the list of results
+    """
+    search_query = sg.popup_get_text(
+        'Enter the name of the song you want to search:')
+    results = client.search(search_query, type='track', limit=10)
+    tracks = results['tracks']['items']
+    return [
+        f"{track['name']} by {track['artists'][0]['name']} - {track['id']}"
+        for track in tracks
+    ]
+
+
+sp.search()
+def display_song_features(client, track_id):
+    """
+    Use the Spotify client to retrieve the features of the selected song
+    """
+    features = client.audio_features(track_id)
+    sg.popup_scrolled(
+        f"Track ID: {track_id}\n"
+        f"Acousticness: {features[0]['acousticness']}\n"
+        f"Danceability: {features[0]['danceability']}\n"
+        f"Energy: {features[0]['energy']}\n"
+        f"Instrumentalness: {features[0]['instrumentalness']}\n"
+        f"Liveness: {features[0]['liveness']}\n"
+        f"Loudness: {features[0]['loudness']}\n"
+        f"Speechiness: {features[0]['speechiness']}\n"
+        f"Tempo: {features[0]['tempo']}\n"
+        f"Valence: {features[0]['valence']}\n")
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
