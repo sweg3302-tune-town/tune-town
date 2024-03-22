@@ -137,6 +137,15 @@ def logout():
 def home():
     return render_template('home.html')
 
+@app.route('/create_post')
+def create_post():
+    return render_template('create_post.html')
+
+@app.route('/post')
+def post():
+    #SQL logic goes here
+    return 
+
 # METHODS
 # Route to add a new user
 @app.route('/add_user', methods=['POST'])
