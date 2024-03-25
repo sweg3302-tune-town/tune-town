@@ -18,7 +18,7 @@ app.secret_key = client_secret
 sp_oauth = SpotifyOAuth(
         client_id = os.getenv("CLIENT_ID"),
         client_secret = os.getenv("CLIENT_SECRET"),
-        redirect_uri = 'http://localhost:5000/callback',
+        redirect_uri = 'http://127.0.0.1:5000/callback',
         scope = 'user-read-private user-top-read user-library-read',
         cache_path=None
     )
@@ -79,6 +79,10 @@ def logout():
 @app.route('/home')
 def home():
     return render_template('home.html')
+
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
