@@ -78,7 +78,22 @@ def logout():
 
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    token_info = session.get('spotify_token_info', None)
+    if not token_info:
+        return redirect('/')
+
+    sp = spotipy.Spotify(auth=token_info['access_token'])
+    topSongs = sp.current_user_top_tracks(limit=6)
+    songData = []
+    for song in topSongs['items']:
+        pic = song['album']['images'][0]['url'] if song['album']['images'] else None
+        name = song['name']
+        artist = song['artists'][0]['name'] if song['artists'] else "Unknown Artist"
+        likes = "0" # Need to implement a way to track likes
+        preview = song['preview_url']
+        songData.append((pic, name, artist, likes, preview))
+    
+    return render_template('home.html', songData=songData)
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
