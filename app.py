@@ -6,7 +6,6 @@ from spotipy.oauth2 import SpotifyOAuth
 
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text
-import sqlite3
 from flask import jsonify
 
 load_dotenv()
@@ -20,8 +19,8 @@ app = Flask(__name__)
 app.secret_key = client_secret
 
 # DATABASE
-db = SQLAlchemy()
-db_name = 'tunetown.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+db = SQLAlchemy(app)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -44,9 +43,8 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-db.init_app(app)
+# db.init_app(app)
 
 with app.app_context():
     db.create_all()
@@ -141,10 +139,20 @@ def home():
 def create_post():
     return render_template('create_post.html')
 
-@app.route('/post')
+@app.route('/post', methods=['POST'])
 def post():
-    #SQL logic goes here
-    return 
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+        
+        # Create instance of the model and populate it with form data
+        new_post = Post(title=title, content=content)
+        
+        # Add new entry to the session and commit to save to the database
+        db.session.add(new_post)
+        db.session.commit()
+        
+        return 'Form submitted successfully!'
 
 # METHODS
 # Route to add a new user
