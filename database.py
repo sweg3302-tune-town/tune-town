@@ -63,3 +63,29 @@ def addUser(username):
     except Exception as e:
         print("Error adding user into database:", e)
         return False
+
+# Database Structure Overview:
+#
+# Database Name: tunetown-db
+#
+# Tables:
+# 
+# 1. Table: users
+#    - Description: holds all the users of the system
+#    - Columns:
+#      - idUser: generated id number by sql
+#      - username: user's username (NOT display name)
+#
+# --- everything below this needs to be edited --- 
+# 2. Table: posts
+#    - Description: holds all posts ever
+#    - Columns:
+#      - post_id: 
+#      - title:
+#      - content:
+#
+# 3. Table: user_posts
+#    - Description: a table to relationships, hold a user-post pair
+#    - Columns:
+#      - user_id: 
+#      - post_id:
