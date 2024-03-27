@@ -19,23 +19,25 @@
 </head>
 
 <body>
-    <div class="ttheader">
-        <div class="logo">
-            <img src="/static/img/tunetown.png" alt="logo">
-        </div>
-        <div class="tunetown-logo">TuneTown</div>
-        <div class="header-menu">
-            <a href="/profile">Profile</a>
-            <a href="#">About</a>
-            <a href="/home">Feed</a>
-            <div class="search-box">
-                <form action="/search" method="get">
-                    <input type="text" name="search" placeholder="Search...">
-                    <button type="submit">Search</button>
-                </form>
-            </div>
+  <div class="top-menu">
+
+    <div class="logo-box">
+      <img src="/static/img/tunetown.png" alt="logo" />
+    </div>
+
+    <div id="tunetown-title">TuneTown</div>
+    <div class="header-menu">
+        <a href="#">Profile</a>
+        <a href="#">About</a>
+        <a href="/home">Feed</a>
+        <div class="search-box">
+            <form action="/search" method="get">
+                <input type="text" name="search" placeholder="Search...">
+                <button type="submit">Search</button>
+            </form>
         </div>
     </div>
+  </div>
 
     <div class="song-scroll">
         {% for pic, name, artist, preview in songData %}
