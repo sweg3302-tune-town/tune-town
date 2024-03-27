@@ -38,7 +38,7 @@
     </div>
 
     <div class="song-scroll">
-        {% for pic, name, artist, likes, preview in songData %}
+        {% for pic, name, artist, preview in songData %}
         <div class="song-card">
             <img src="{{ pic }}" alt="Album Cover" class="album-cover" onclick="toggleAudio(this.nextElementSibling)">
             <audio src="{{ preview }}" style="display:none;"></audio>
@@ -46,7 +46,7 @@
                 <h2>{{ name }}</h2>
                 <p>Artist: {{ artist }}</p>
                 <div class="song-interaction">
-                    <span class="likes">{{ likes }} Likes</span>
+                    <span class="likes">45 Likes</span>
                     <button class="like-button">Like</button>
                 </div>
                 <div class="comments-section">

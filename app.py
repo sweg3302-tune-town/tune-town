@@ -33,7 +33,7 @@ def getManySongData(songs):
     pics = []
     artists = []
     previews = []
-    for song in songs['items']:
+    for song in songs:
         names.append(song['name'])
         previews.append(song['preview_url'])
         for artist in song['artists']:
@@ -63,7 +63,7 @@ def index():
     pfp = user_profile['images'][0]['url'] if user_profile['images'] else ''
     id = user_profile['id']  
 
-    topSongs = sp.current_user_top_tracks(limit=6)
+    topSongs = sp.current_user_top_tracks(limit=6)['items']
     songData = getManySongData(topSongs)
     
     return render_template('profile.html', username=username, pfp=pfp, id=id, songData=songData)
