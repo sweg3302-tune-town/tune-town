@@ -57,6 +57,13 @@ body {
   text-decoration: none;
   color: var(--light-accent);
   font-size: 16px;
+  padding: 5px 10px
+}
+
+.header-menu a:hover,
+.header-menu a:focus {
+  background-color: #93C572;
+  border-radius: 5px;
 }
 
 .search-box {
@@ -73,12 +80,70 @@ body {
 
 .search-box input[type="text"] {
   width: 200px;
+  border: 1px solid #ddd;
 }
 
 .search-box button {
   background-color: #fff;
-  color: #93c572;
+  color: #93C572;
   cursor: pointer;
+}
+
+/* Song cards specific for home.html */
+.song-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 10px auto;
+  /* Smaller margin */
+  padding: 10px;
+  /* Smaller padding */
+  max-width: 75%;
+  /* Smaller width */
+}
+
+.album-cover {
+  width: 80%;
+  /* Adjust based on your preference */
+  height: auto;
+  /* Maintain aspect ratio */
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: block;
+  /* Center the image */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.song-info h2,
+.song-info p {
+  margin: 5px 0;
+}
+
+.song-interaction {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.like-button {
+  background-color: #1DB954;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.comments-section input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  /* Include padding and border in the element's total width */
 }
 
 /* Header styles */
@@ -87,6 +152,7 @@ body {
   padding: 20px;
   text-align: center;
 }
+
 h1 {
   color: var(--light-accent);
   font-size: 20px;
@@ -207,14 +273,17 @@ h1 {
     transform: scale(1) translate(0, 0);
     opacity: 0;
   }
+
   50% {
     opacity: 1;
     transform: scale(1.5) translate(50%, -50%);
   }
+
   80% {
     opacity: 0;
     transform: scale(1.5) translate(100%, -100%);
   }
+
   100% {
     transform: scale(1.5) translate(100%, -100%);
     opacity: 0;

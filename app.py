@@ -84,14 +84,13 @@ def logout():
 
 @app.route('/home')
 def home():
-
     sp = spotipy.Spotify(auth=session['spotify_token_info']['access_token'])
     top_tracks = sp.current_user_top_tracks(limit=5, time_range='medium_term')
     top_track_ids = [track['id'] for track in top_tracks['items']]
 
     recommendations = sp.recommendations(seed_tracks=top_track_ids, limit=10)['tracks']
     songData = getManySongData(recommendations)
-
+    
     return render_template('home.html', songData=songData)
 
 if __name__ == '__main__':
