@@ -49,6 +49,9 @@ def index():
     pfp = user_profile['images'][0]['url'] if user_profile['images'] else ''
     id = user_profile['id']
 
+    # adding the user to the database if they are not already in there
+    addUser(id)
+
     topSongs = sp.current_user_top_tracks(limit=6)
     names = []
     pics = []
