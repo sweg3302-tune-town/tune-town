@@ -28,6 +28,22 @@ def htmlForLoginButton():
     htmlLoginButton = "<a href='" + auth_url + "'>Login to Spotify</a>"
     return htmlLoginButton
 
+def getManySongData(songs):
+    names = []
+    pics = []
+    artists = []
+    previews = []
+    for song in songs['items']:
+        names.append(song['name'])
+        previews.append(song['preview_url'])
+        for artist in song['artists']:
+            artists.append(artist['name'])
+            break # this makes sure only the first artist is appended
+        cover_art_url = song['album']['images'][0]['url'] if len(song['album']['images']) > 0 else None
+        pics.append(cover_art_url)
+    songData = zip(pics, names, artists, previews)
+    return songData
+
 # --- routes ---
 @app.route('/')
 def index():
@@ -48,17 +64,7 @@ def index():
     id = user_profile['id']  
 
     topSongs = sp.current_user_top_tracks(limit=6)
-    names = []
-    pics = []
-    previews = []
-    for song in topSongs['items']:
-        names.append(song['name'])
-        previews.append(song['preview_url'])
-        album_id = song['album']['id']
-        album_info = sp.album(album_id)
-        cover_art_url = album_info['images'][0]['url'] if len(album_info['images']) > 0 else None
-        pics.append(cover_art_url)
-    songData = zip(pics, names, previews)
+    songData = getManySongData(topSongs)
     
     return render_template('profile.html', username=username, pfp=pfp, id=id, songData=songData)
 
@@ -78,20 +84,12 @@ def logout():
 
 @app.route('/home')
 def home():
-    token_info = session.get('spotify_token_info', None)
-    if not token_info:
-        return redirect('/')
+    sp = spotipy.Spotify(auth=session['spotify_token_info']['access_token'])
+    top_tracks = sp.current_user_top_tracks(limit=5, time_range='medium_term')
+    top_track_ids = [track['id'] for track in top_tracks['items']]
 
-    sp = spotipy.Spotify(auth=token_info['access_token'])
-    topSongs = sp.current_user_top_tracks(limit=6)
-    songData = []
-    for song in topSongs['items']:
-        pic = song['album']['images'][0]['url'] if song['album']['images'] else None
-        name = song['name']
-        artist = song['artists'][0]['name'] if song['artists'] else "Unknown Artist"
-        likes = "0" # Need to implement a way to track likes
-        preview = song['preview_url']
-        songData.append((pic, name, artist, likes, preview))
+    recommendations = sp.recommendations(seed_tracks=top_track_ids, limit=10)['tracks']
+    songData = getManySongData(recommendations)
     
     return render_template('home.html', songData=songData)
 

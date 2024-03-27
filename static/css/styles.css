@@ -1,36 +1,49 @@
+/* Color variables */
+/* https://coolors.co/121619-2d4739-09814a-a89f61-e5c78a */
+:root {
+  --background: #121619; /* Night */
+  --dark-color: #2d4739; /* Dark Green */
+  --primary: #09814a; /* Main Green */
+  --dark-accent: #a89f61; /* Dark Tan */
+  --light-accent: #e5c78a; /* Light Tan */
+}
+
 /* Body styles */
 body {
-  background-color: #68716a;
+  background-color: var(--background);
   font-family: gill sans, sans-serif;
   margin: 0;
   padding: 0;
-  padding-top: 70px;
 }
 
-.ttheader {
+.top-menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #68716a;
-  color: #fff;
+  background-color: var(--background);
+  color: var(--light-accent);
   padding: 10px;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  /* Ensure the header is always on top */
 }
 
-.tunetown-logo {
+#tunetown-title {
   font-size: 45px;
 }
 
-.logo {
+.logo-box {
   display: flex;
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--light-accent);
+  overflow: hidden;
+  margin: 5px;
+}
 
+.logo-box img {
+  max-width: 80%;
+  max-height: 80%;
 }
 
 .header-menu {
@@ -42,7 +55,7 @@ body {
 
 .header-menu a {
   text-decoration: none;
-  color: #fff;
+  color: var(--light-accent);
   font-size: 16px;
   padding: 5px 10px
 }
@@ -76,7 +89,6 @@ body {
   cursor: pointer;
 }
 
-/* Song cards specific for home.html */
 /* Song cards specific for home.html */
 .song-card {
   background-color: #fff;
@@ -136,9 +148,15 @@ body {
 
 /* Header styles */
 .header {
-  background-color: #1DB954;
+  background-color: var(--primary);
   padding: 20px;
   text-align: center;
+}
+
+h1 {
+  color: var(--light-accent);
+  font-size: 20px;
+  text-decoration: none;
 }
 
 /* Profile picture styles */
@@ -154,28 +172,57 @@ body {
   margin-top: 20px;
 }
 
-/* Photo grid styles */
-.photo-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+/* CARDS */
+.song-cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
   padding: 20px;
-  margin: 0 auto;
-  text-align: center;
 }
 
-/* Individual photo styles */
-.photo-grid .photo {
-  border-radius: 5px;
+.song-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 225px; /* Each item spans the full width of the column */
+  margin: 24px;
+  padding: 24px;
+  background-color: var(--primary);
+  border-radius: 24px;
+}
+
+.song-img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.song-img img {
+  height: 225px;
+  border-radius: 24px;
+  box-shadow: 0 8px 8px var(--light-accent);
+  cursor: pointer;
+  transition: transform 1s ease;
+
   overflow: hidden;
 }
 
-/* Photo image styles */
-.photo-grid .photo img {
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
+.song-img :hover {
+  transform: scale(1.05);
 }
+
+.song-cards h4 {
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.song-cards p {
+  margin-top: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgb(168, 166, 166);
+}
+/* ----------------- */
 
 .musicnotes {
   display: block;
@@ -247,12 +294,12 @@ body {
 .footer {
   padding: 20px;
   text-align: center;
-
+  background-color: var(--dark-color);
 }
 
 /* Footer link styles */
 .footer a {
   margin-right: 10px;
-  color: #333;
+  color: var(--light-accent);
   text-decoration: none;
 }
