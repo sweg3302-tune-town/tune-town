@@ -82,8 +82,8 @@ def logout():
     session.clear()
     return render_template('logout.html')
 
-@app.route('/home')
-def home():
+@app.route('/feed')
+def feed():
     sp = spotipy.Spotify(auth=session['spotify_token_info']['access_token'])
     top_tracks = sp.current_user_top_tracks(limit=5, time_range='medium_term')
     top_track_ids = [track['id'] for track in top_tracks['items']]
@@ -91,7 +91,7 @@ def home():
     recommendations = sp.recommendations(seed_tracks=top_track_ids, limit=10)['tracks']
     songData = getManySongData(recommendations)
     
-    return render_template('home.html', songData=songData)
+    return render_template('feed.html', songData=songData)
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
