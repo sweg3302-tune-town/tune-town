@@ -30,6 +30,11 @@ def htmlForLoginButton():
     htmlLoginButton = "<a href='" + auth_url + "'>Login to Spotify</a>"
     return htmlLoginButton
 
+def getUser():
+    sp = spotipy.Spotify(auth=session['spotify_token_info']['access_token'])
+    user_profile = sp.current_user()
+    return user_profile
+
 # --- routes ---
 @app.route('/')
 def index():
@@ -42,9 +47,9 @@ def index():
         return htmlForLoginButton()
     
     sp = spotipy.Spotify(auth=session['spotify_token_info']['access_token'])
-    user_profile = sp.current_user()
 
     # user variables
+    user_profile = getUser()
     username = user_profile['display_name']
     pfp = user_profile['images'][0]['url'] if user_profile['images'] else ''
     id = user_profile['id']
@@ -96,10 +101,12 @@ def create_post():
 @app.route('/post', methods=['POST'])
 def post():
     if request.method == 'POST':
-        title = request.form['title']
-        content = request.form['content']
-        
-        data = ('value1', 'value2', 'value3')
+        userId = getUser()['id']
+        # selection will come from irene's search function
+        songId = request.form['selection']
+        description = request.form['description']
+
+        data = (userId, songId, description)
         addPost(data)
         
         return 'Form submitted successfully!'

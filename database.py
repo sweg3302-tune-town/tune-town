@@ -13,14 +13,27 @@ def connect_db():
     return pymysql.connect(host=DB_HOST, user=DB_USER, password=DB_PASSWORD, database=DB_NAME)
 
 # Method to fetch data from the database
+# what we need:
+# - add post
+        # - takes in userId, songId (given by search), description
+# - delete post 
+# - add friend
+# - remove friend
+
+# what is done:
+# - add user
+
+# add post
 def addPost(data):
     try:
         connection = connect_db()
+        print("--CONNECTED--")
         cursor = connection.cursor()
 
         # Example query
         # query = "INSERT INTO your_table_name (column1, column2, column3) VALUES (%s, %s, %s)"
-        query = "INSERT INTO posts (column1, column2, column3) VALUES (%s, %s, %s)"
+        query = "INSERT INTO posts (userId, selection, description) VALUES (%s, %s, %s)"
+        print("--QUERY EXECUTED--")
 
         cursor.execute(query, data)
         connection.commit()
@@ -29,19 +42,18 @@ def addPost(data):
         cursor.close()
         connection.close()
 
+        print("--DONE--")
         return True
 
     except Exception as e:
-        print("Error adding data to database:", e)
+        print("Error adding post into database:", e)
         return False
     
-# ADD USER - DONE
+# add user
 def addUser(username):
     try:
         connection = connect_db()
-        print("--CONNECTED--")
         cursor = connection.cursor()
-        print("cursor working")
 
         db_check = "SELECT * FROM users WHERE username = %s"
         cursor.execute(db_check, (username,))
@@ -50,8 +62,8 @@ def addUser(username):
         if exsisting_user:
             print("User already in database.")
         else:
-            insert_user = "INSERT INTO users (username) VALUES (%s)"
-            cursor.execute(insert_user, (username,))
+            query = "INSERT INTO users (username) VALUES (%s)"
+            cursor.execute(query, (username,))
             connection.commit()
             print("This new user has been added to the database!")
 
@@ -76,16 +88,11 @@ def addUser(username):
 #      - idUser: generated id number by sql
 #      - username: user's username (NOT display name)
 #
-# --- everything below this needs to be edited --- 
 # 2. Table: posts
 #    - Description: holds all posts ever
 #    - Columns:
-#      - post_id: 
-#      - title:
-#      - content:
+#      - postId: generated id number by sql
+#      - userId: the userId of the creator
+#      - selection: a spotify songId
+#      - description: the post caption given by the user upon post creation
 #
-# 3. Table: user_posts
-#    - Description: a table to relationships, hold a user-post pair
-#    - Columns:
-#      - user_id: 
-#      - post_id:
