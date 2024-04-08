@@ -2,10 +2,11 @@
 /* https://coolors.co/121619-2d4739-09814a-a89f61-e5c78a */
 :root {
   --background: #121619; /* Night */
-  --dark-color: #2d4739; /* Dark Green */
-  --primary: #09814a; /* Main Green */
-  --dark-accent: #a89f61; /* Dark Tan */
-  --light-accent: #e5c78a; /* Light Tan */
+  --dark-color: #3f3573; /* Dark Indigo */
+  --primary: #665aa6; /* Main Indigo */
+  --dark-accent: #85756E; /* Dark Tan */
+  --light-accent: #e3d8c2; /* Light Tan */
+  --pop-of-color: #20A4F3;
 }
 
 /* Body styles */
@@ -62,7 +63,7 @@ body {
 
 .header-menu a:hover,
 .header-menu a:focus {
-  background-color: #93C572;
+  background-color: var(--pop-of-color);
   border-radius: 5px;
 }
 
@@ -83,9 +84,20 @@ body {
   border: 1px solid #ddd;
 }
 
+.search-box button:hover {
+  background-color: var(--pop-of-color);
+  color: var(--light-accent);
+  cursor: pointer;
+}
+.search-box button:active {
+  background-color: var(--light-accent);
+  color: var(--primary);
+  cursor: pointer;
+}
+
 .search-box button {
-  background-color: #fff;
-  color: #93C572;
+  background-color: var(--primary);
+  color: var(--light-accent);
   cursor: pointer;
 }
 
@@ -93,7 +105,6 @@ body {
 .song-card {
   background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 10px auto;
   /* Smaller margin */
   padding: 10px;
@@ -148,7 +159,6 @@ body {
 
 /* Header styles */
 .header {
-  background-color: var(--primary);
   padding: 20px;
   text-align: center;
 }
@@ -165,6 +175,32 @@ h1 {
   width: 150px;
   height: 150px;
   object-fit: cover;
+  color: var(--light-accent);
+}
+
+.profile-info {
+  background-color: var(--background);
+  padding: 20px;
+  text-align: center;
+  color: var(--light-accent);
+}
+
+.profile-info h3 {
+  color: var(--dark-color);
+  font-weight: normal;
+}
+
+.profile-info a {
+  color: var(--pop-of-color);
+  text-decoration: none;
+}
+.profile-info a:hover{
+  color: var(--primary);
+  text-decoration: none;
+}
+.profile-info a:active{
+  color: var(--dark-accent);
+  text-decoration: none;
 }
 
 /* Profile info styles */
@@ -200,10 +236,8 @@ h1 {
 .song-img img {
   height: 225px;
   border-radius: 24px;
-  box-shadow: 0 8px 8px var(--light-accent);
   cursor: pointer;
   transition: transform 1s ease;
-
   overflow: hidden;
 }
 
@@ -214,13 +248,14 @@ h1 {
 .song-cards h4 {
   font-size: 14px;
   margin-bottom: 0;
+  color: var(--light-accent);
 }
 
 .song-cards p {
   margin-top: 5px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
-  color: rgb(168, 166, 166);
+  color: var(--background);
 }
 /* ----------------- */
 
