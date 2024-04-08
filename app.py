@@ -3,7 +3,6 @@ import os
 from flask import Flask, redirect, session, request, render_template, make_response
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-import PySimpleGUI as sg
 
 load_dotenv()
 
@@ -29,6 +28,22 @@ def htmlForLoginButton():
     htmlLoginButton = "<a href='" + auth_url + "'>Login to Spotify</a>"
     return htmlLoginButton
 
+def getManySongData(songs):
+    names = []
+    pics = []
+    artists = []
+    previews = []
+    for song in songs:
+        names.append(song['name'])
+        previews.append(song['preview_url'])
+        for artist in song['artists']:
+            artists.append(artist['name'])
+            break # this makes sure only the first artist is appended
+        cover_art_url = song['album']['images'][0]['url'] if len(song['album']['images']) > 0 else None
+        pics.append(cover_art_url)
+    songData = zip(pics, names, artists, previews)
+    return songData
+
 # --- routes ---
 @app.route('/')
 def index():
@@ -48,18 +63,8 @@ def index():
     pfp = user_profile['images'][0]['url'] if user_profile['images'] else ''
     id = user_profile['id']  
 
-    topSongs = sp.current_user_top_tracks(limit=6)
-    names = []
-    pics = []
-    previews = []
-    for song in topSongs['items']:
-        names.append(song['name'])
-        previews.append(song['preview_url'])
-        album_id = song['album']['id']
-        album_info = sp.album(album_id)
-        cover_art_url = album_info['images'][0]['url'] if len(album_info['images']) > 0 else None
-        pics.append(cover_art_url)
-    songData = zip(pics, names, previews)
+    topSongs = sp.current_user_top_tracks(limit=6)['items']
+    songData = getManySongData(topSongs)
     
     return render_template('profile.html', username=username, pfp=pfp, id=id, songData=songData)
 
@@ -77,41 +82,31 @@ def logout():
     session.clear()
     return render_template('logout.html')
 
-@app.route('/home')
-def home():
-    return render_template('home.html')
+@app.route('/feed')
+def feed():
+    sp = spotipy.Spotify(auth=session['spotify_token_info']['access_token'])
+    top_tracks = sp.current_user_top_tracks(limit=5, time_range='medium_term')
+    top_track_ids = [track['id'] for track in top_tracks['items']]
 
-def search_song(client):
-    """
-    Use the Spotify client to search for a song and retrieve the list of results
-    """
-    search_query = sg.popup_get_text(
-        'Enter the name of the song you want to search:')
-    results = client.search(search_query, type='track', limit=10)
-    tracks = results['tracks']['items']
-    return [
-        f"{track['name']} by {track['artists'][0]['name']} - {track['id']}"
-        for track in tracks
-    ]
+    recommendations = sp.recommendations(seed_tracks=top_track_ids, limit=10)['tracks']
+    songData = getManySongData(recommendations)
+    
+    return render_template('feed.html', songData=songData)
 
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if request.method == "POST":
+        search_query = request.form.get('search_query')
+        if not search_query:
+            return redirect('/search')  
 
-sp.search()
-def display_song_features(client, track_id):
-    """
-    Use the Spotify client to retrieve the features of the selected song
-    """
-    features = client.audio_features(track_id)
-    sg.popup_scrolled(
-        f"Track ID: {track_id}\n"
-        f"Acousticness: {features[0]['acousticness']}\n"
-        f"Danceability: {features[0]['danceability']}\n"
-        f"Energy: {features[0]['energy']}\n"
-        f"Instrumentalness: {features[0]['instrumentalness']}\n"
-        f"Liveness: {features[0]['liveness']}\n"
-        f"Loudness: {features[0]['loudness']}\n"
-        f"Speechiness: {features[0]['speechiness']}\n"
-        f"Tempo: {features[0]['tempo']}\n"
-        f"Valence: {features[0]['valence']}\n")
+        sp = spotipy.Spotify(auth=session['spotify_token_info']['access_token'])
+        results = sp.search(q = search_query, limit = 10, type = 'track')
+        songData = getManySongData(results['tracks']['items'])
+
+        return render_template('search_results.html', songData=songData)
+
+    return render_template('search.html')
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
