@@ -95,18 +95,18 @@ def feed():
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
-    if request.method == "POST":
+    songData = []
+    if request.method == 'POST':
         search_query = request.form.get('search_query')
         if not search_query:
             return redirect('/search')  
 
         sp = spotipy.Spotify(auth=session['spotify_token_info']['access_token'])
-        results = sp.search(q = search_query, limit = 10, type = 'track')
+        results = sp.search(q = search_query, limit = 5, type = 'track')
         songData = getManySongData(results['tracks']['items'])
 
-        return render_template('search_results.html', songData=songData)
-
-    return render_template('search.html')
+        
+    return render_template('search.html', songData = songData)
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
