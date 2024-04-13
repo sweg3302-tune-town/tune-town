@@ -103,7 +103,7 @@ def search():
 
         sp = spotipy.Spotify(auth=session['spotify_token_info']['access_token'])
         results = sp.search(q = search_query, limit = 5, type = 'track')
-        songData = getManySongData(results['tracks']['items'])
+        songData = getManySongData(results['tracks']['items'])        
 
         
     return render_template('search.html', songData = songData)

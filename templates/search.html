@@ -4,29 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create Post</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
   </head>
   <body>
     <h1>Search for a Song</h1>
-    <form action="/search" method="post">
+    <form id="searchForm" action="/search" method="post">
       <input
         type="text"
+        id="search_query"
         name="search_query"
         placeholder="Search for songs, artists..."
       />
-      <button onclick="displaySearch()" type="submit">Search</button>
+      <button onclick="displaySearch()" type="button">Search</button>
     </form>
 
     <script>
       function displaySearch() {
         const searchInput = document.getElementById("search_query").value;
         const searchResultsContainer = document.createElement('div');
-        let html = '';
 
         // Clear previous search results
         searchResultsContainer.innerHTML = '';
 
         if (searchInput !== '') {
-          html += `
+          html = `
                 <div class="song-cards">
                     {% for pic, name, artist, preview in songData %}
                     <div class="song-card">
@@ -50,6 +51,8 @@
             searchResultsContainer.textContent = 'No results found.';
         }
         
+        document.body.appendChild(searchResultsContainer);
+        // document.getElementById("searchForm").submit();
       }
     </script>
   </body>
