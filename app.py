@@ -4,9 +4,11 @@ from flask import Flask, redirect, session, request, render_template, jsonify
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
+# loads all methods in the database file
+from database import *
+
 load_dotenv()
 
-# this code is retarded because it's caching everyones user auth in the .cache file
 client_id = os.getenv("CLIENT_ID")
 client_secret = os.getenv("CLIENT_SECRET")
 
@@ -28,6 +30,11 @@ def htmlForLoginButton():
     htmlLoginButton = "<a href='" + auth_url + "'>Login to Spotify</a>"
     return htmlLoginButton
 
+def getUser():
+    sp = spotipy.Spotify(auth=session['spotify_token_info']['access_token'])
+    user_profile = sp.current_user()
+    return user_profile
+
 def getManySongData(songs):
     names = []
     pics = []
@@ -47,7 +54,7 @@ def getManySongData(songs):
 # --- routes ---
 @app.route('/')
 def index():
-  
+
     # Get user's profile information
     token_info = session.get('spotify_token_info')
 
@@ -56,12 +63,15 @@ def index():
         return htmlForLoginButton()
     
     sp = spotipy.Spotify(auth=session['spotify_token_info']['access_token'])
-    user_profile = sp.current_user()
 
     # user variables
+    user_profile = getUser()
     username = user_profile['display_name']
     pfp = user_profile['images'][0]['url'] if user_profile['images'] else ''
-    id = user_profile['id']  
+    id = user_profile['id']
+
+    # adding the user to the database if they are not already in there
+    addUser(id)
 
     topSongs = sp.current_user_top_tracks(limit=6)['items']
     songData = getManySongData(topSongs)
@@ -120,6 +130,23 @@ def create():
         return songs
     else:
         return render_template('create.html', songs=songs)
+
+@app.route('/create_post')
+def create_post():
+    return render_template('create_post.html')
+
+@app.route('/post', methods=['POST'])
+def post():
+    if request.method == 'POST':
+        userId = getUser()['id']
+        # selection will come from irene's search function
+        songId = request.form['selection']
+        description = request.form['description']
+
+        data = (userId, songId, description)
+        addPost(data)
+        
+        return 'Form submitted successfully!'
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
