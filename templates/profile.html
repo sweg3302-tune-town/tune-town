@@ -26,16 +26,10 @@
 
     <div id="tunetown-title">TuneTown</div>
     <div class="header-menu">
-      <a href="/profile">Profile</a>
-      <a href="#">About</a>
-      <a href="#">Discover</a>
-      <a href="/create_post">New Post</a>
-      <div class="search-box">
-        <form action="/search" method="get">
-          <input type="text" name="search" placeholder="Search..." />
-          <button type="submit">Search</button>
-        </form>
-      </div>
+        <a href="/">Profile</a>
+        <a href="#">About</a>
+        <a href="/feed">Feed</a>
+        <a href="/create">Post a Song!</a>
     </div>
   </div>
 
@@ -44,7 +38,7 @@
       <img class="profile-pic" src="{{ pfp }}" alt="Profile Picture" />
       <div class="profile-info">
         <h2>{{ username }}</h2>
-        <p>@{{ id }}</p>
+        <h3><a href="/">@{{ id }}</a></h3>
         <p>
           Bio: This is my TuneTown profile! I will post my favorite songs here!.
         </p>
@@ -78,8 +72,8 @@
     </div>
 
     <div class="footer">
-      <a href="/home">Home</a>
-      <a href="/profile">Profile</a>
+      <a href="/feed">Feed</a>
+      <a href="/">Profile</a>
       <a href="/settings">Settings</a>
       <a href="/logout">Logout</a>
     </div>

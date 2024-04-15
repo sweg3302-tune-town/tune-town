@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Post</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+  </head>
+  <body>
+    <h1>Search for a Song</h1>
+    <form action="/create" method="POST" onsubmit="return displaySearch()">
+      <input
+        type="text"
+        id="search_query"
+        name="search_query"
+        placeholder="Search for songs, artists..."
+      />
+      <button type="submit">Search</button>
+    </form>
+
+    <script>
+      function displaySearch() {
+        console.log("DISPLAY SEARCH");
+
+        const searchInput = document.getElementById("search_query").value;
+
+        fetch("/create", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ search_query: searchInput }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // Handle response data and update DOM
+            console.log(data);
+
+            // Update DOM based on response data
+            const searchResultsContainer = document.createElement("div");
+            searchResultsContainer.classList.add("song-cards"); // Add class to container
+
+            // Clear previous search results
+            searchResultsContainer.innerHTML = "";
+
+            if (searchInput !== "") {;
+              for (let i = 0; i < data.length; i++) {
+                const song = data[i];
+                const songCard = document.createElement("div");
+                songCard.classList.add("song-card"); // Add class to card
+
+                const songImg = document.createElement("div");
+                songImg.classList.add("song-img"); // Add class to image container
+
+                const audioElement = document.createElement("audio");
+                audioElement.classList.add("musicPlayer"); // Add class to audio element
+                audioElement.src = song[3]; // Assuming preview URL is at index 3
+
+                const imgElement = document.createElement("img");
+                imgElement.classList.add("playButton"); // Add class to play button
+                imgElement.src = song[0]; // Assuming pic URL is at index 0
+                imgElement.alt = "not found";
+                imgElement.addEventListener("click", function () {
+                  toggleAudio(this.previousElementSibling);
+                });
+
+                songImg.appendChild(audioElement);
+                songImg.appendChild(imgElement);
+
+                const songName = document.createElement("h4");
+                songName.textContent = song[1]; // Assuming name is at index 1
+
+                const artistName = document.createElement("p");
+                artistName.textContent = song[2]; // Assuming artist is at index 2
+
+                songCard.appendChild(songImg);
+                songCard.appendChild(songName);
+                songCard.appendChild(artistName);
+
+                searchResultsContainer.appendChild(songCard);
+              }
+            } else {
+              searchResultsContainer.textContent = "No results found.";
+            }
+
+            document.body.appendChild(searchResultsContainer);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+        return false;
+      }
+    </script>
+  </body>
+</html>

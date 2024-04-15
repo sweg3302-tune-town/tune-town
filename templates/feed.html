@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover TuneTown</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script>
+        // Function to play or pause audio
+        function toggleAudio(audioElement) {
+            if (audioElement.paused) {
+                audioElement.play();
+            } else {
+                audioElement.pause();
+            }
+        }
+    </script>
+</head>
+
+<body>
+  <div class="top-menu">
+
+    <div class="logo-box">
+      <img src="/static/img/tunetown.png" alt="logo" />
+    </div>
+
+    <div id="tunetown-title">TuneTown</div>
+    <div class="header-menu">
+        <a href="/">Profile</a>
+        <a href="#">About</a>
+        <a href="/feed">Feed</a>
+        <a href="/create">Post a Song!</a>
+    </div>
+  </div>
+
+    <div class="song-scroll">
+        {% for pic, name, artist, preview in songData %}
+        <div class="song-card">
+            <img src="{{ pic }}" alt="Album Cover" class="album-cover" onclick="toggleAudio(this.nextElementSibling)">
+            <audio src="{{ preview }}" style="display:none;"></audio>
+            <div class="song-info">
+                <h2>{{ name }}</h2>
+                <p>Artist: {{ artist }}</p>
+                <div class="song-interaction">
+                    <span class="likes">45 Likes</span>
+                    <button class="like-button">Like</button>
+                </div>
+                <div class="comments-section">
+                    <!-- Comments will be dynamically loaded here -->
+                    <input type="text" placeholder="Add a comment...">
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="footer">
+        <a href="/">Profile</a>
+        <a href="/feed">Feed</a>
+        <a href="/settings">Settings</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+</body>
+
+</html>

@@ -2,10 +2,11 @@
 /* https://coolors.co/121619-2d4739-09814a-a89f61-e5c78a */
 :root {
   --background: #121619; /* Night */
-  --dark-color: #2d4739; /* Dark Green */
-  --primary: #09814a; /* Main Green */
-  --dark-accent: #a89f61; /* Dark Tan */
-  --light-accent: #e5c78a; /* Light Tan */
+  --dark-color: #3f3573; /* Dark Indigo */
+  --primary: #665aa6; /* Main Indigo */
+  --dark-accent: #85756E; /* Dark Tan */
+  --light-accent: #e3d8c2; /* Light Tan */
+  --pop-of-color: #20A4F3;
 }
 
 /* Body styles */
@@ -57,6 +58,13 @@ body {
   text-decoration: none;
   color: var(--light-accent);
   font-size: 16px;
+  padding: 5px 10px
+}
+
+.header-menu a:hover,
+.header-menu a:focus {
+  background-color: var(--pop-of-color);
+  border-radius: 5px;
 }
 
 .search-box {
@@ -73,20 +81,88 @@ body {
 
 .search-box input[type="text"] {
   width: 200px;
+  border: 1px solid #ddd;
+}
+
+.search-box button:hover {
+  background-color: var(--pop-of-color);
+  color: var(--light-accent);
+  cursor: pointer;
+}
+.search-box button:active {
+  background-color: var(--light-accent);
+  color: var(--primary);
+  cursor: pointer;
 }
 
 .search-box button {
-  background-color: #fff;
-  color: #93c572;
+  background-color: var(--primary);
+  color: var(--light-accent);
   cursor: pointer;
+}
+
+/* Song cards specific for home.html */
+.song-card {
+  background-color: #fff;
+  border-radius: 10px;
+  margin: 10px auto;
+  /* Smaller margin */
+  padding: 10px;
+  /* Smaller padding */
+  max-width: 75%;
+  /* Smaller width */
+}
+
+.album-cover {
+  width: 80%;
+  /* Adjust based on your preference */
+  height: auto;
+  /* Maintain aspect ratio */
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: block;
+  /* Center the image */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.song-info h2,
+.song-info p {
+  margin: 5px 0;
+}
+
+.song-interaction {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.like-button {
+  background-color: #1DB954;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.comments-section input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  /* Include padding and border in the element's total width */
 }
 
 /* Header styles */
 .header {
-  background-color: var(--primary);
   padding: 20px;
   text-align: center;
 }
+
 h1 {
   color: var(--light-accent);
   font-size: 20px;
@@ -99,6 +175,32 @@ h1 {
   width: 150px;
   height: 150px;
   object-fit: cover;
+  color: var(--light-accent);
+}
+
+.profile-info {
+  background-color: var(--background);
+  padding: 20px;
+  text-align: center;
+  color: var(--light-accent);
+}
+
+.profile-info h3 {
+  color: var(--dark-color);
+  font-weight: normal;
+}
+
+.profile-info a {
+  color: var(--pop-of-color);
+  text-decoration: none;
+}
+.profile-info a:hover{
+  color: var(--primary);
+  text-decoration: none;
+}
+.profile-info a:active{
+  color: var(--dark-accent);
+  text-decoration: none;
 }
 
 /* Profile info styles */
@@ -134,10 +236,8 @@ h1 {
 .song-img img {
   height: 225px;
   border-radius: 24px;
-  box-shadow: 0 8px 8px var(--light-accent);
   cursor: pointer;
   transition: transform 1s ease;
-
   overflow: hidden;
 }
 
@@ -148,13 +248,14 @@ h1 {
 .song-cards h4 {
   font-size: 14px;
   margin-bottom: 0;
+  color: var(--light-accent);
 }
 
 .song-cards p {
   margin-top: 5px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
-  color: rgb(168, 166, 166);
+  color: var(--background);
 }
 /* ----------------- */
 
@@ -207,14 +308,17 @@ h1 {
     transform: scale(1) translate(0, 0);
     opacity: 0;
   }
+
   50% {
     opacity: 1;
     transform: scale(1.5) translate(50%, -50%);
   }
+
   80% {
     opacity: 0;
     transform: scale(1.5) translate(100%, -100%);
   }
+
   100% {
     transform: scale(1.5) translate(100%, -100%);
     opacity: 0;
