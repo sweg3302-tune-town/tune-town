@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 import os
-from flask import Flask, redirect, session, request, render_template, make_response
+from flask import Flask, redirect, session, request, render_template, jsonify
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
@@ -65,7 +65,7 @@ def index():
 
     topSongs = sp.current_user_top_tracks(limit=6)['items']
     songData = getManySongData(topSongs)
-    
+
     return render_template('profile.html', username=username, pfp=pfp, id=id, songData=songData)
 
 @app.route('/callback')
@@ -92,6 +92,34 @@ def feed():
     songData = getManySongData(recommendations)
     
     return render_template('feed.html', songData=songData)
+
+@app.route('/create', methods=['GET', 'POST'])
+def create():
+    songs = []
+    if request.method == 'POST':
+        print("CREATE IF CHUNK IN /CREATE")
+        # search_query = request.args.get('search_query')
+        # search_query = request.form['search_query']
+        search_query = request.json.get('search_query')
+
+        sp = spotipy.Spotify(auth=session['spotify_token_info']['access_token'])
+        results = sp.search(q = search_query, limit = 5, type = 'track')
+        songData = getManySongData(results['tracks']['items'])
+        
+        # have to convert zip to array of arrays for the JS
+        for pic, name, artist, preview in songData:       
+            song = [None] * 4
+            song[0] = pic
+            song[1] = name
+            song[2] = artist
+            song[3] = preview
+            songs.append(song)
+        
+        songs = jsonify(songs)
+
+        return songs
+    else:
+        return render_template('create.html', songs=songs)
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
