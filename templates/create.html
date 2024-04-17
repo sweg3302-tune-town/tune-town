@@ -6,6 +6,11 @@
     <title>Create Post</title>
     <link rel="stylesheet" href="/static/css/styles.css" />
   </head>
+  <style>
+    p, label {
+      color : white;
+    }
+  </style>
   <body>
     <h1>Search for a Song</h1>
     <form action="/create" method="POST" onsubmit="return displaySearch()">
@@ -18,10 +23,41 @@
       <button type="submit">Search</button>
     </form>
 
-    <script>
-      function displaySearch() {
-        console.log("DISPLAY SEARCH");
+    <div class="song-cards" id="searchResults"></div>
+    <p id="selection"></p>
 
+    <form action="/post_song" id="postForm">
+      <!-- songId received from search selection -->
+      <input type="hidden" id="songIdInput" name="songIdInput" />
+
+      <label for="postDescription">Description:</label><br />
+      <textarea
+        id="postDescription"
+        name="postDescription"
+        rows="4"
+        cols="50"
+      ></textarea
+      ><br />
+
+      <button id="postSubmit" type="submit">Post</button>
+    </form>
+
+    <script>
+      function isSongIdSelected() {
+        const songId = document.getElementById("songIdInput").value;
+        return songId !== "";
+      }
+
+      document.getElementById("postForm")
+        .addEventListener("submit", function (event) {
+          // Prevent form submission if songId is not selected
+          if (!isSongIdSelected()) {
+            event.preventDefault();
+            alert("Please select a song before submitting.");
+          }
+        });
+
+      function displaySearch() {
         const searchInput = document.getElementById("search_query").value;
 
         fetch("/create", {
@@ -37,34 +73,36 @@
             console.log(data);
 
             // Update DOM based on response data
-            const searchResultsContainer = document.createElement("div");
-            searchResultsContainer.classList.add("song-cards"); // Add class to container
+            searchResultsContainer = document.getElementById("searchResults")
 
             // Clear previous search results
             searchResultsContainer.innerHTML = "";
 
-            if (searchInput !== "") {;
+            if (searchInput !== "") {
               for (let i = 0; i < data.length; i++) {
                 const song = data[i];
                 const songCard = document.createElement("div");
                 songCard.classList.add("song-card"); // Add class to card
 
+                songCard.addEventListener("click", function () {
+                  // Capture songId
+                  const songId = song[4]; // Assuming songId is at index 4
+                  console.log("Clicked songId:", songId);
+                  document.getElementById("songIdInput").value = songId;
+
+                  const postSubmit = document.getElementById("postSubmit");
+                  postSubmit.disabled = !isSongIdSelected();
+
+                  document.getElementById("selection").textContent = "Selected song: " + song[1] + " by " + song[2];
+                });
+
                 const songImg = document.createElement("div");
                 songImg.classList.add("song-img"); // Add class to image container
 
-                const audioElement = document.createElement("audio");
-                audioElement.classList.add("musicPlayer"); // Add class to audio element
-                audioElement.src = song[3]; // Assuming preview URL is at index 3
-
                 const imgElement = document.createElement("img");
-                imgElement.classList.add("playButton"); // Add class to play button
                 imgElement.src = song[0]; // Assuming pic URL is at index 0
                 imgElement.alt = "not found";
-                imgElement.addEventListener("click", function () {
-                  toggleAudio(this.previousElementSibling);
-                });
 
-                songImg.appendChild(audioElement);
                 songImg.appendChild(imgElement);
 
                 const songName = document.createElement("h4");
@@ -83,7 +121,6 @@
               searchResultsContainer.textContent = "No results found.";
             }
 
-            document.body.appendChild(searchResultsContainer);
           })
           .catch((error) => {
             console.error("Error:", error);

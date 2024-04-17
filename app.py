@@ -40,6 +40,7 @@ def getManySongData(songs):
     pics = []
     artists = []
     previews = []
+    ids = []
     for song in songs:
         names.append(song['name'])
         previews.append(song['preview_url'])
@@ -48,7 +49,8 @@ def getManySongData(songs):
             break # this makes sure only the first artist is appended
         cover_art_url = song['album']['images'][0]['url'] if len(song['album']['images']) > 0 else None
         pics.append(cover_art_url)
-    songData = zip(pics, names, artists, previews)
+        ids.append(song['id'])
+    songData = zip(pics, names, artists, previews, ids)
     return songData
 
 # --- routes ---
@@ -107,9 +109,6 @@ def feed():
 def create():
     songs = []
     if request.method == 'POST':
-        print("CREATE IF CHUNK IN /CREATE")
-        # search_query = request.args.get('search_query')
-        # search_query = request.form['search_query']
         search_query = request.json.get('search_query')
 
         sp = spotipy.Spotify(auth=session['spotify_token_info']['access_token'])
@@ -117,12 +116,13 @@ def create():
         songData = getManySongData(results['tracks']['items'])
         
         # have to convert zip to array of arrays for the JS
-        for pic, name, artist, preview in songData:       
-            song = [None] * 4
+        for pic, name, artist, preview, id in songData:       
+            song = [None] * 5
             song[0] = pic
             song[1] = name
             song[2] = artist
             song[3] = preview
+            song[4] = id
             songs.append(song)
         
         songs = jsonify(songs)
@@ -130,6 +130,12 @@ def create():
         return songs
     else:
         return render_template('create.html', songs=songs)
+    
+@app.route('/post_song', methods=['POST'])
+def post():
+    songId = request.form['songIdInput']
+    description = request.form['postDescription']
+    
 
 @app.route('/create_post')
 def create_post():
