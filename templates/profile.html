@@ -16,20 +16,30 @@
         audioElement.pause();
       }
     }
+
+    // JavaScript to display the flash message as an alert
+    document.addEventListener('DOMContentLoaded', function() {
+      var message = "{{ get_flashed_messages() }}";
+      if (message && message.length > 2) { // Length > 2 to account for '[]'
+        var startIndex = message.indexOf("&#39;") + 5; // Adjust based on the actual structure of the message
+        var endIndex = message.lastIndexOf("&#39;");
+        var actualMessage = message.substring(startIndex, endIndex);
+        alert(actualMessage);
+      }
+    });
   </script>
 
   <div class="top-menu">
-
     <div class="logo-box">
       <img src="/static/img/tunetown.png" alt="logo" />
     </div>
 
     <div id="tunetown-title">TuneTown</div>
     <div class="header-menu">
-        <a href="/">Profile</a>
-        <a href="#">About</a>
-        <a href="/feed">Feed</a>
-        <a href="/create">Post a Song!</a>
+      <a href="/">Profile</a>
+      <a href="#">About</a>
+      <a href="/feed">Feed</a>
+      <a href="/create">Post a Song!</a>
     </div>
   </div>
 

@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 import os
-from flask import Flask, redirect, session, request, render_template, jsonify
+from flask import Flask, flash, redirect, session, request, render_template, jsonify
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
@@ -56,7 +56,6 @@ def getManySongData(songs):
 # --- routes ---
 @app.route('/')
 def index():
-
     # Get user's profile information
     token_info = session.get('spotify_token_info')
 
@@ -132,27 +131,17 @@ def create():
         return render_template('create.html', songs=songs)
     
 @app.route('/post_song', methods=['POST'])
-def post():
+def post_song():
+    userId = getUser()['id']
     songId = request.form['songIdInput']
     description = request.form['postDescription']
-    
 
-@app.route('/create_post')
-def create_post():
-    return render_template('create_post.html')
+    data = (userId, songId, description)
+    addPost(data)
 
-@app.route('/post', methods=['POST'])
-def post():
-    if request.method == 'POST':
-        userId = getUser()['id']
-        # selection will come from irene's search function
-        songId = request.form['selection']
-        description = request.form['description']
-
-        data = (userId, songId, description)
-        addPost(data)
+    flash("Song posted sucessfully!")
+    return redirect('/?from_create=true')
         
-        return 'Form submitted successfully!'
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
