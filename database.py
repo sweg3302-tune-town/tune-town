@@ -14,14 +14,13 @@ def connect_db():
 
 # Method to fetch data from the database
 # what we need:
-# - add post
-        # - takes in userId, songId (given by search), description
 # - delete post 
 # - add friend
 # - remove friend
 
 # what is done:
 # - add user
+# - add post
 
 # add post
 def addPost(data):
@@ -75,6 +74,27 @@ def addUser(username):
     except Exception as e:
         print("Error adding user into database:", e)
         return False
+    
+def getMyPosts(username):
+    try:
+        connection = connect_db()
+        cursor = connection.cursor()
+
+        query = "SELECT selection FROM posts WHERE userId = %s"
+        cursor.execute(query, (username,))
+
+        posts = cursor.fetchall()
+
+        connection.commit()
+
+        cursor.close()
+        connection.close()
+        return posts
+
+    except Exception as e:
+        print("Error getting user posts from database:", e)
+        return False
+
 
 # Database Structure Overview:
 #

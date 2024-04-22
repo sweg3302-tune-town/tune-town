@@ -74,10 +74,15 @@ def index():
     # adding the user to the database if they are not already in there
     addUser(id)
 
-    topSongs = sp.current_user_top_tracks(limit=6)['items']
-    songData = getManySongData(topSongs)
+    topSongs = sp.current_user_top_tracks(limit=5)['items']
+    topSongsData = getManySongData(topSongs)
 
-    return render_template('profile.html', username=username, pfp=pfp, id=id, songData=songData)
+    tracks = []
+    for songId in getMyPosts(id):
+        tracks.append(sp.track(songId[0]))
+    myPostsData = getManySongData(tracks)
+
+    return render_template('profile.html', username=username, pfp=pfp, id=id, topSongsData=topSongsData, myPostsData=myPostsData)
 
 @app.route('/callback')
 def callback():
