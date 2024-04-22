@@ -93,7 +93,7 @@ def getMyPosts(username):
 
     except Exception as e:
         print("Error getting user posts from database:", e)
-        return False
+        return []
 
 
 # Database Structure Overview:
