@@ -81,14 +81,15 @@ body {
 .container {
   display: flex;
   justify-content: center; 
-  align-items: center; 
   margin: 0; 
   padding: 0; 
+
 }
 
 .left, .right {
   margin-top: 5%;
   flex: 1; 
+  overflow-y: auto;
 }
 
 .left {
@@ -99,8 +100,10 @@ body {
 .right {
   margin-left: auto; 
   flex: 40%;
+  position: relative;
+  top: initial;
+  right:initial;
 }
-
 
 
 .searchTitle h1 {
@@ -111,13 +114,8 @@ body {
 
 .search-box {
   display: flex;
-
 }
 
-.search-box h1 {
-  align-items: center;
-  margin: auto;
-}
 
 .search-box form {
   align-items: center;
@@ -148,14 +146,6 @@ body {
   border: none; /* Blue border when focused */
   background-color: var(--light-accent);
   color: var(--background);
-}
-
-.post-description {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: left;
-  min-height: 100vh;
 }
 
 .search-box textarea {
@@ -200,11 +190,29 @@ body {
   display: none;
 }
 
-.description-box {
-  position: fixed;
-  right: 10%;
-  top: 5%;
+.search-title {
+  position: relative;
+  top: initial;
+  right:initial;
 }
+.description-box {
+  position: relative;
+  top: initial;
+  right:initial;
+}
+
+.description-box {
+  margin-top: 0;
+}
+
+.right h1 {
+  text-align: center;
+}
+.right #selection {
+  color: var(--pop-of-color);
+  text-align: center;
+}
+
 
 
 /* Song cards specific for home.html */
