@@ -5,59 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create Post</title>
     <link rel="stylesheet" href="/static/css/styles.css" />
+
+    <style>
+      p, label {
+        color: white;
+      }
+    </style>
   </head>
-  <style>
-    p, label {
-      color : white;
-    }
-  </style>
+
   <body>
 
-    <div class="searchTitle"> 
-
-    <h1>Search for a Song</h1> 
-   </div>
-
-    <div class="search-box">
-    <form action="/create" method="POST" onsubmit="return displaySearch()">
-
-      <br>
-      <input
-        type="text"
-        id="search_query"
-        name="search_query"
-        placeholder="Search for songs, artists..."
-      />
-      <button type="submit">Search</button>
-    </form>
-    </div>
-
-
-    <br>
-
-    <div class="song-cards" id="searchResults"></div>
-    <p id="selection"></p>
-
-
-    <div class="search-box">
-      <form action="/post_song" method="POST" id="postForm">
-        <!-- songId received from search selection -->
-        <input type="hidden" id="songIdInput" name="songIdInput" />
-        
-        <label for="postDescription"></label><br />
-        <textarea
-          id="postDescription"
-          name="postDescription"
-          rows="4"
-          cols="50"
-          placeholder="Enter a caption here..."
-        ></textarea>
-     
-  
+    <div class="container">
+      <div class="left">
+    
+        <div class="searchTitle">
+          <h1>Search for a Song</h1>
+        </div>
+    
+        <div class="search-box">
+          <form action="/create" method="POST" onsubmit="return displaySearch()">
+            <br>
+            <input
+              type="text"
+              id="search_query"
+              name="search_query"
+              placeholder="Search for songs, artists..."
+            />
+            <button type="submit">Search</button>
+          </form>
+        </div>
+    
         <br>
-        <button id="postSubmit" type="submit">Post</button>
-      </form>
+    
+        <div class="song-cards" id="searchResults"></div>
+
+      </div>
+      <div class="right">
+        <p id="selection"></p>
+    
+        <div class="descption-box">
+        <div class="search-box">
+          <form action="/post_song" method="POST" id="postForm">
+            <!-- songId received from search selection -->
+            <input type="hidden" id="songIdInput" name="songIdInput" />
+    
+            <label for="postDescription"></label><br />
+            <textarea
+              id="postDescription"
+              name="postDescription"
+              rows="4"
+              cols="50"
+              placeholder="Enter a caption here..."
+            ></textarea>
+    
+    
+            <br>
+            <button id="postSubmit" type="submit">Post</button>
+          </form>
+        </div>
+        </div>
+      </div>
     </div>
+
 
     <script>
       function isSongIdSelected() {

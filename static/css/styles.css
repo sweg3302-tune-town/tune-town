@@ -74,16 +74,44 @@ body {
   border-radius: 5px;
 }
 
+
+
+/* post page */
+
+.container {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  margin: 0; 
+  padding: 0; 
+}
+
+.left, .right {
+  margin-top: 5%;
+  flex: 1; 
+}
+
+.left {
+  margin-right: auto; 
+  flex: 60%;
+}
+
+.right {
+  margin-left: auto; 
+  flex: 40%;
+}
+
+
+
 .searchTitle h1 {
   align-items: center;
   text-align: center;
   margin: auto;
-  margin-top: 5%;
 }
 
 .search-box {
   display: flex;
-  align-items: center;
+
 }
 
 .search-box h1 {
@@ -137,7 +165,6 @@ body {
 }
 
 
-
 .search-box button:hover {
   background-color: var(--pop-of-color);
   color: var(--light-accent);
@@ -158,6 +185,25 @@ body {
 #postSubmit {
   margin-top: 10px;
   min-width: 100%;
+}
+
+
+#searchResults {
+  max-height: 800px;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none; 
+  border-radius: 25px;
+}
+
+#searchResults::-webkit-scrollbar {
+  display: none;
+}
+
+.description-box {
+  position: fixed;
+  right: 10%;
+  top: 5%;
 }
 
 
