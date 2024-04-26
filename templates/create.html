@@ -12,8 +12,16 @@
     }
   </style>
   <body>
-    <h1>Search for a Song</h1>
+
+    <div class="searchTitle"> 
+
+    <h1>Search for a Song</h1> 
+   </div>
+
+    <div class="search-box">
     <form action="/create" method="POST" onsubmit="return displaySearch()">
+
+      <br>
       <input
         type="text"
         id="search_query"
@@ -22,31 +30,41 @@
       />
       <button type="submit">Search</button>
     </form>
+    </div>
+
+
+    <br>
 
     <div class="song-cards" id="searchResults"></div>
     <p id="selection"></p>
 
-    <form action="/post_song" method="POST" id="postForm">
-      <!-- songId received from search selection -->
-      <input type="hidden" id="songIdInput" name="songIdInput" />
 
-      <label for="postDescription">Description:</label><br />
-      <textarea
-        id="postDescription"
-        name="postDescription"
-        rows="4"
-        cols="50"
-      ></textarea
-      ><br />
-
-      <button id="postSubmit" type="submit">Post</button>
-    </form>
+    <div class="search-box">
+      <form action="/post_song" method="POST" id="postForm">
+        <!-- songId received from search selection -->
+        <input type="hidden" id="songIdInput" name="songIdInput" />
+        
+        <label for="postDescription"></label><br />
+        <textarea
+          id="postDescription"
+          name="postDescription"
+          rows="4"
+          cols="50"
+          placeholder="Enter a caption here..."
+        ></textarea>
+     
+  
+        <br>
+        <button id="postSubmit" type="submit">Post</button>
+      </form>
+    </div>
 
     <script>
       function isSongIdSelected() {
         const songId = document.getElementById("songIdInput").value;
         return songId !== "";
       }
+
 
       document.getElementById("postForm")
         .addEventListener("submit", function (event) {

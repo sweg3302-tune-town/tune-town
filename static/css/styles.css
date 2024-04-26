@@ -12,7 +12,7 @@
 /* Body styles */
 body {
   background-color: var(--background);
-  font-family: gill sans, sans-serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', sans-serif, sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -30,6 +30,11 @@ body {
   font-size: 45px;
 }
 
+#tunetown-title h1{
+  line-height: normal;
+  font-size: 35px;
+}
+
 .logo-box {
   display: flex;
   justify-content: center;
@@ -40,6 +45,8 @@ body {
   background-color: var(--light-accent);
   overflow: hidden;
   margin: 5px;
+  text-decoration: none;
+
 }
 
 .logo-box img {
@@ -67,13 +74,30 @@ body {
   border-radius: 5px;
 }
 
+.searchTitle h1 {
+  align-items: center;
+  text-align: center;
+  margin: auto;
+  margin-top: 5%;
+}
+
 .search-box {
   display: flex;
   align-items: center;
 }
 
+.search-box h1 {
+  align-items: center;
+  margin: auto;
+}
+
+.search-box form {
+  align-items: center;
+  margin: auto;
+}
+
 .search-box input[type="text"],
-.search-box button {
+.search-box button, .search-box textarea {
   padding: 8px;
   border: none;
   border-radius: 5px;
@@ -81,8 +105,38 @@ body {
 
 .search-box input[type="text"] {
   width: 200px;
-  border: 1px solid #ddd;
+  background-color: #21292e;
+  color: var(--light-accent);
 }
+
+.search-box input[type="text"]:active, .search-box textarea:active {
+  outline: none;
+  background-color: #21292e;
+  color: var(--light-accent);
+}
+
+.search-box input[type="text"]:focus, .search-box textarea:focus {
+  outline: none;
+  border: none; /* Blue border when focused */
+  background-color: var(--light-accent);
+  color: var(--background);
+}
+
+.post-description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  min-height: 100vh;
+}
+
+.search-box textarea {
+  resize: none;
+  background-color: #21292e;
+  color: var(--light-accent);
+}
+
+
 
 .search-box button:hover {
   background-color: var(--pop-of-color);
@@ -100,6 +154,12 @@ body {
   color: var(--light-accent);
   cursor: pointer;
 }
+
+#postSubmit {
+  margin-top: 10px;
+  min-width: 100%;
+}
+
 
 /* Song cards specific for home.html */
 .song-card {
