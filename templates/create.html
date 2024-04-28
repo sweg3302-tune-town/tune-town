@@ -5,48 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create Post</title>
     <link rel="stylesheet" href="/static/css/styles.css" />
+
+    <style>
+      p, label {
+        color: white;
+      }
+
+
+    </style>
+      <div class="top-menu">
+        <div class="logo-box">
+          <img src="/static/img/tunetown.png" alt="logo" />
+        </div>
+    
+        <div id="tunetown-title">TuneTown</div>
+        <div class="header-menu">
+          <a href="/">Profile</a>
+          <a href="#">About</a>
+          <a href="/feed">Feed</a>
+          <a href="/create">Post a Song!</a>
+        </div>
+      </div>
   </head>
-  <style>
-    p, label {
-      color : white;
-    }
-  </style>
+
   <body>
-    <h1>Search for a Song</h1>
-    <form action="/create" method="POST" onsubmit="return displaySearch()">
-      <input
-        type="text"
-        id="search_query"
-        name="search_query"
-        placeholder="Search for songs, artists..."
-      />
-      <button type="submit">Search</button>
-    </form>
 
-    <div class="song-cards" id="searchResults"></div>
-    <p id="selection"></p>
+    <div class="container">
+      <div class="left">
+    
+        <div class="searchTitle">
+          <h1>Search for a Song</h1>
+        
+    
+        <div class="search-box">
+          <form action="/create" method="POST" onsubmit="return displaySearch()">
+            <br>
+            <input
+              type="text"
+              id="search_query"
+              name="search_query"
+              placeholder="Search for songs, artists..."
+            />
+            <button type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    
 
-    <form action="/post_song" method="POST" id="postForm">
-      <!-- songId received from search selection -->
-      <input type="hidden" id="songIdInput" name="songIdInput" />
+    
+        <div class="song-cards" id="searchResults"></div>
 
-      <label for="postDescription">Description:</label><br />
-      <textarea
-        id="postDescription"
-        name="postDescription"
-        rows="4"
-        cols="50"
-      ></textarea
-      ><br />
+      </div>
+      <div class="right">
+    
+        <div class="description-box">
+        <div class="search-box">
+          <form action="/post_song" method="POST" id="postForm">
+            <h1>Selected Song</h1>
+          <p div="song-card" id="selection"></p>
+            <!-- songId received from search selection -->
+            <input type="hidden" id="songIdInput" name="songIdInput" />
+    
+            <label for="postDescription"></label><br />
+            <textarea
+              id="postDescription"
+              name="postDescription"
+              rows="4"
+              cols="50"
+              placeholder="Enter a caption here..."
+            ></textarea>
+    
+    
+            <br>
+            <button id="postSubmit" type="submit">Post</button>
+          </form>
+        </div>
+        </div>
+      </div>
+    </div>
 
-      <button id="postSubmit" type="submit">Post</button>
-    </form>
 
     <script>
       function isSongIdSelected() {
         const songId = document.getElementById("songIdInput").value;
         return songId !== "";
       }
+
 
       document.getElementById("postForm")
         .addEventListener("submit", function (event) {
@@ -93,7 +137,7 @@
                   const postSubmit = document.getElementById("postSubmit");
                   postSubmit.disabled = !isSongIdSelected();
 
-                  document.getElementById("selection").textContent = "Selected song: " + song[1] + " by " + song[2];
+                  document.getElementById("selection").textContent = song[1] + " by " + song[2];
                 });
 
                 const songImg = document.createElement("div");
