@@ -4,6 +4,7 @@ from flask import Flask, flash, redirect, session, request, render_template, jso
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
+
 # loads all methods in the database file
 from database import *
 
@@ -11,6 +12,7 @@ load_dotenv()
 
 client_id = os.getenv("CLIENT_ID")
 client_secret = os.getenv("CLIENT_SECRET")
+
 
 # This is what connects the front end to the backend
 app = Flask(__name__)

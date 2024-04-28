@@ -24,6 +24,7 @@ body {
   background-color: var(--background);
   color: var(--light-accent);
   padding: 10px;
+  margin-right: 10px;
 }
 
 #tunetown-title {
@@ -46,7 +47,6 @@ body {
   overflow: hidden;
   margin: 5px;
   text-decoration: none;
-
 }
 
 .logo-box img {
@@ -72,6 +72,12 @@ body {
 .header-menu a:focus {
   background-color: var(--pop-of-color);
   border-radius: 5px;
+}
+
+/* profile page */
+
+.top-songs h1{
+  margin-left: 100px;
 }
 
 
@@ -107,7 +113,6 @@ body {
 
 
 .searchTitle h1 {
-  align-items: center;
   text-align: center;
   margin: auto;
 }
@@ -118,7 +123,6 @@ body {
 
 
 .search-box form {
-  align-items: center;
   margin: auto;
 }
 
@@ -253,7 +257,7 @@ body {
 }
 
 .like-button {
-  background-color: #1DB954;
+  background-color: var(--pop-of-color);
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -322,6 +326,7 @@ h1 {
   margin-top: 20px;
 }
 
+
 /* CARDS */
 .song-cards {
   display: flex;
@@ -372,6 +377,15 @@ h1 {
   color: var(--background);
 }
 /* ----------------- */
+
+
+
+
+
+
+
+
+
 
 .musicnotes {
   display: block;
