@@ -33,23 +33,30 @@
     </div>
   </div>
 
+    <div class="feed-head">
+        <h2>Your Personalized AI Song Recommendations</h2>
+        <h4>Refresh the page for brand new recommendations!</h4>
+    </div>
+
     <div class="song-scroll">
         {% for pic, name, artist, preview, id in songData %}
-        <div class="song-card">
-            <img src="{{ pic }}" alt="Album Cover" class="album-cover" onclick="toggleAudio(this.nextElementSibling)">
+        <div class="song-card-feed"> 
+            <img src="{{ pic }}" alt="Album Cover" class="album-cover-feed" onclick="toggleAudio(this.nextElementSibling)">
             <audio src="{{ preview }}" style="display:none;"></audio>
-            <div class="song-info">
+            <div class="song-info-feed">
                 <h2>{{ name }}</h2>
-                <p>Artist: {{ artist }}</p>
+                <p>{{ artist }}</p> 
                 <div class="song-interaction">
                     <span class="likes">45 Likes</span>
-                    <button class="like-button">Like</button>
+                    <button class="like-button">Like
+                      </button>
                 </div>
                 <div class="comments-section">
                     <!-- Comments will be dynamically loaded here -->
-                    <input type="text" placeholder="Add a comment...">
+                    <input type="text" placeholder="&nbsp;Add a comment...">
                 </div>
             </div>
+            
         </div>
         {% endfor %}
     </div>
@@ -62,5 +69,4 @@
     </div>
 
 </body>
-
 </html>
