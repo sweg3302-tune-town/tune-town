@@ -27,40 +27,6 @@ sp_oauth = SpotifyOAuth(
         cache_path=None
     )
 
-def htmlForLoginButton():
-    auth_url = sp_oauth.get_authorize_url()
-    htmlLoginButton = '''
-    <head> 
-        <style>
-            body {
-                background-color: #121619;
-                align-items: center;
-                align-content: center;
-                min-height: 100vh;
-            } button {
-                background-color: #665aa6;
-                padding: 10px 20px;
-                font-size: 18px;
-                color: #fff;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: background-color 0.3s ease;
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-            } button:hover {
-                background-color: 20A4F3;
-            } a {
-                text-decoration: none;
-                color: #fff; }
-        </style>
-    </head>
-    <body> <button><a href=''' + auth_url + '''>Login to Spotify</a></button> </body>
-    '''
-    return htmlLoginButton
-
 def getUser():
     sp = spotipy.Spotify(auth=session['spotify_token_info']['access_token'])
     user_profile = sp.current_user()
@@ -92,7 +58,7 @@ def index():
 
     if not token_info or sp_oauth.is_token_expired(token_info):
         # return redirect('/callback')
-        return htmlForLoginButton()
+        return redirect('/login')
     
     sp = spotipy.Spotify(auth=session['spotify_token_info']['access_token'])
 
@@ -122,6 +88,11 @@ def callback():
     token_info = sp_oauth.get_access_token(code)
     session['spotify_token_info'] = token_info
     return redirect('/')
+
+@app.route('/login')
+def login():
+    auth_url = sp_oauth.get_authorize_url()
+    return render_template('login.html', auth_url = auth_url)
 
 @app.route('/logout')
 def logout():
