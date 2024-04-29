@@ -35,13 +35,13 @@
 
     <div class="song-scroll">
         {% for (pic, name, artist, preview, id), description, user in data %}
-        <div class="song-card">
-            <h1>{{ user }}</h1>
-            <img src="{{ pic }}" alt="Album Cover" class="album-cover" onclick="toggleAudio(this.nextElementSibling)">
+        <div class="song-card-feed">
+            <img src="{{ pic }}" alt="Album Cover" class="album-cover-feed" onclick="toggleAudio(this.nextElementSibling)">
             <audio src="{{ preview }}" style="display:none;"></audio>
-            <div class="song-info">
+            <div class="song-info-feed">
                 <h2>{{ name }}</h2>
                 <p>Artist: {{ artist }}</p>
+                <h2>@{{ user }}</h2>
                 <p>{{ description }}</p>
                 <div class="song-interaction">
                     <span class="likes">45 Likes</span>

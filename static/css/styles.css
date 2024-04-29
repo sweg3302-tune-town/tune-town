@@ -80,15 +80,9 @@ body {
   border-radius: 5px;
 }
 
-/* profile page */
-
 .top-songs h1{
   margin-left: 100px;
 }
-
-
-
-/* post page */
 
 .container {
   display: flex;
@@ -186,7 +180,6 @@ body {
   margin-top: 10px;
   min-width: 100%;
 }
-
 
 #searchResults {
   max-height: 800px;
@@ -405,12 +398,13 @@ h1 {
   max-width: 40%;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 20px;
+  margin-bottom: 70px;
 }
 
 .song-scroll .song-info-feed h2, .song-scroll .song-info-feed p {
   color: var(--light-accent);
   margin-left: 20px;
+  margin-bottom: -5px;
 }
 
 .song-scroll .song-interaction, .song-scroll .comments-section{
@@ -464,20 +458,7 @@ a {
   color: var(--light-accent);
 }
 
-
-
-
-
 /* ----------------- */
-
-
-
-
-
-
-
-
-
 
 .musicnotes {
   display: block;
