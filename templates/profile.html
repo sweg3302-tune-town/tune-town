@@ -18,9 +18,10 @@
     }
 
     // JavaScript to display the flash message as an alert
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener("DOMContentLoaded", function () {
       var message = "{{ get_flashed_messages() }}";
-      if (message && message.length > 2) { // Length > 2 to account for '[]'
+      if (message && message.length > 2) {
+        // Length > 2 to account for '[]'
         var startIndex = message.indexOf("&#39;") + 5; // Adjust based on the actual structure of the message
         var endIndex = message.lastIndexOf("&#39;");
         var actualMessage = message.substring(startIndex, endIndex);
@@ -53,6 +54,15 @@
           Bio: This is my TuneTown profile! I will post my favorite songs here!
         </p>
       </div>
+      <form id="add_friend_form" action="/add_friend" method="POST">
+        <input
+          type="text"
+          id="friend"
+          name="friend"
+          placeholder="Enter friend's username..."
+        />
+        <button type="submit">Add</button>
+      </form>
     </div>
 
     <div class="top-songs">

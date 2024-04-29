@@ -5,8 +5,8 @@ import os
 load_dotenv()
 
 DB_HOST = os.getenv("DB_HOST")
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_USER = os.getenv("DEVELOPER")
+DB_PASSWORD = os.getenv("PASSWORD")
 DB_NAME = os.getenv("DB_NAME")
 
 def connect_db():
@@ -26,27 +26,23 @@ def connect_db():
 def addPost(data):
     try:
         connection = connect_db()
-        print("--CONNECTED--")
         cursor = connection.cursor()
 
         # Example query
         # query = "INSERT INTO your_table_name (column1, column2, column3) VALUES (%s, %s, %s)"
         query = "INSERT INTO posts (userId, selection, description) VALUES (%s, %s, %s)"
-        print("--QUERY EXECUTED--")
 
         cursor.execute(query, data)
         connection.commit()
-
-        # Close cursor and connection
-        cursor.close()
-        connection.close()
-
-        print("--DONE--")
+        
         return True
 
     except Exception as e:
         print("Error adding post into database:", e)
         return False
+    finally:
+        cursor.close()
+        connection.close()
     
 # add user
 def addUser(username):
@@ -66,14 +62,14 @@ def addUser(username):
             connection.commit()
             print("This new user has been added to the database!")
 
-        # Close cursor and connection
-        cursor.close()
-        connection.close()
         return True
 
     except Exception as e:
         print("Error adding user into database:", e)
         return False
+    finally:
+        cursor.close()
+        connection.close()
     
 def getMyPosts(username):
     try:
@@ -87,14 +83,60 @@ def getMyPosts(username):
 
         connection.commit()
 
-        cursor.close()
-        connection.close()
         return posts
 
     except Exception as e:
         print("Error getting user posts from database:", e)
         return []
+    finally:
+        cursor.close()
+        connection.close()
 
+def getFriendPosts(username):
+    try:
+        connection = connect_db()
+        cursor = connection.cursor()
+
+        # Query to select posts from friends
+        query = """
+        SELECT p.selection, p.description 
+        FROM posts p
+        INNER JOIN friends f ON p.userId = f.friend 
+        WHERE f.user = %s
+        """
+
+        cursor.execute(query, (username,))
+        posts = cursor.fetchall()
+
+        connection.commit()
+
+        return posts
+
+    except Exception as e:
+        print("Error getting friend posts from database:", e)
+        return []
+    finally:
+        cursor.close()
+        connection.close()
+
+    
+def addFriend(user, friend):
+    try:
+        connection = connect_db()
+        cursor = connection.cursor()
+
+        query = "INSERT INTO friends (user, friend) VALUES (%s, %s)"
+        cursor.execute(query, (user, friend,))
+
+        connection.commit()
+        return True
+    
+    except Exception as e:
+        print("Error adding friend")
+        return False
+    finally:
+        cursor.close()
+        connection.close()
 
 # Database Structure Overview:
 #
