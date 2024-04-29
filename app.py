@@ -29,7 +29,36 @@ sp_oauth = SpotifyOAuth(
 
 def htmlForLoginButton():
     auth_url = sp_oauth.get_authorize_url()
-    htmlLoginButton = "<a href='" + auth_url + "'>Login to Spotify</a>"
+    htmlLoginButton = '''
+    <head> 
+        <style>
+            body {
+                background-color: #121619;
+                align-items: center;
+                align-content: center;
+                min-height: 100vh;
+            } button {
+                background-color: #665aa6;
+                padding: 10px 20px;
+                font-size: 18px;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            } button:hover {
+                background-color: 20A4F3;
+            } a {
+                text-decoration: none;
+                color: #fff; }
+        </style>
+    </head>
+    <body> <button><a href=''' + auth_url + '''>Login to Spotify</a></button> </body>
+    '''
     return htmlLoginButton
 
 def getUser():
