@@ -62,14 +62,14 @@ def addUser(username):
             connection.commit()
             print("This new user has been added to the database!")
 
+        cursor.close()
+        connection.close()
         return True
 
     except Exception as e:
         print("Error adding user into database:", e)
         return False
-    finally:
-        cursor.close()
-        connection.close()
+        
     
 def getMyPosts(username):
     try:
@@ -83,14 +83,14 @@ def getMyPosts(username):
 
         connection.commit()
 
+        cursor.close()
+        connection.close()
+
         return posts
 
     except Exception as e:
         print("Error getting user posts from database:", e)
-        return []
-    finally:
-        cursor.close()
-        connection.close()
+        return []        
 
 def getFriendPosts(username):
     try:
@@ -110,15 +110,14 @@ def getFriendPosts(username):
 
         connection.commit()
 
+        cursor.close()
+        connection.close()
+
         return posts
 
     except Exception as e:
         print("Error getting friend posts from database:", e)
         return []
-    finally:
-        cursor.close()
-        connection.close()
-
     
 def addFriend(user, friend):
     try:
@@ -129,14 +128,15 @@ def addFriend(user, friend):
         cursor.execute(query, (user, friend,))
 
         connection.commit()
+
+        cursor.close()
+        connection.close()
         return True
     
     except Exception as e:
         print("Error adding friend")
         return False
-    finally:
-        cursor.close()
-        connection.close()
+        
 
 # Database Structure Overview:
 #
