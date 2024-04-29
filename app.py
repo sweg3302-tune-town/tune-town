@@ -146,7 +146,19 @@ def post_song():
 
     flash("Song posted sucessfully!")
     return redirect('/?from_create=true')
-        
+
+@app.route('/add_friend', methods=['POST'])
+def add_friend():
+
+    userId = getUser()['id']
+    friend = request.form['friend']
+
+    if addFriend(userId, friend):
+        print(f"{userId} has added {friend}")
+    else:
+        print("Failed to add friend")
+    
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
