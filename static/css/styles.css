@@ -51,6 +51,15 @@ body {
   max-height: 85%;
 }
 
+.logo-box a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  overflow: hidden;
+  text-decoration: none;
+}
+
 .header-menu {
   display: flex;
   align-items: center;
