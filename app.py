@@ -72,16 +72,18 @@ def getManySongData(songs):
     artists = []
     previews = []
     ids = []
+    urls = []
     for song in songs:
         names.append(song['name'])
         previews.append(song['preview_url'])
+        urls.append(song['album']['external_urls']['spotify'])
         for artist in song['artists']:
             artists.append(artist['name'])
             break # this makes sure only the first artist is appended
         cover_art_url = song['album']['images'][0]['url'] if len(song['album']['images']) > 0 else None
         pics.append(cover_art_url)
         ids.append(song['id'])
-    songData = zip(pics, names, artists, previews, ids)
+    songData = zip(pics, names, artists, previews, ids, urls)
     return songData
 
 # --- routes ---

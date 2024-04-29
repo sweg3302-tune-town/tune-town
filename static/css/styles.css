@@ -257,32 +257,6 @@ body {
   margin: 5px 0;
 }
 
-.song-interaction {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.like-button {
-  background-color: var(--pop-of-color);
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 8px 12px;
-  cursor: pointer;
-}
-
-.comments-section input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-sizing: border-box;
-  /* Include padding and border in the element's total width */
-}
-
 /* Header styles */
 .header {
   padding: 20px;
@@ -384,6 +358,109 @@ h1 {
   font-weight: 500;
   color: var(--background);
 }
+
+
+
+
+/* feed */
+
+.feed-head {
+  color: var(--light-accent);
+  text-align: center;
+}
+
+.feed-head h4 {
+  color: var(--dark-accent);
+}
+
+.song-scroll {
+  align-content: center;
+  margin-bottom: 10px;
+  align-items: center;
+  
+}
+
+.song-scroll .album-cover-feed {
+  width: 25%;
+  height: 25%;
+  border-radius: 25px 0px 0px 25px;
+  object-fit: cover;
+}
+
+.song-scroll .song-info-feed {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--primary);
+  color: var(--light-accent);
+}
+
+.song-scroll .song-card-feed {
+  display: flex;
+ /* Adjust spacing between song cards */
+  padding-right: 20px;
+  background-color: var(--primary);
+  border-radius: 25px;
+  max-width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+}
+
+.song-scroll .song-info-feed h2, .song-scroll .song-info-feed p {
+  color: var(--light-accent);
+  margin-left: 20px;
+}
+
+.song-scroll .song-interaction, .song-scroll .comments-section{
+  display: flex;
+  float: right;
+  margin-left: 20px;
+  flex: 1;
+}
+
+
+.song-interaction {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.like-button {
+  background-color: var(--pop-of-color);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.likes {
+  align-items: right;
+  text-align: right;
+  color: var(--background);
+}
+
+.comments-section {
+  margin-bottom: 20px;
+}
+
+.comments-section input {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  box-sizing: border-box;
+  /* Include padding and border in the element's total width */
+}
+
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration:underline;
+  color: var(--light-accent);
+}
+
 
 
 

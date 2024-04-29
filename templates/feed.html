@@ -33,21 +33,54 @@
     </div>
   </div>
 
+    <div class="feed-head">
+        <h2>Your Personalized AI Song Recommendations</h2>
+        <h4>Refresh the page for brand new recommendations!</h4>
+    </div>
+
     <div class="song-scroll">
-        {% for pic, name, artist, preview, id in songData %}
-        <div class="song-card">
-            <img src="{{ pic }}" alt="Album Cover" class="album-cover" onclick="toggleAudio(this.nextElementSibling)">
+        {% for pic, name, artist, preview, id, url in songData %}
+        <div class="song-card-feed"> 
+            <img src="{{ pic }}" alt="Album Cover" class="album-cover-feed" onclick="toggleAudio(this.nextElementSibling)">
+            
             <audio src="{{ preview }}" style="display:none;"></audio>
-            <div class="song-info">
-                <h2>{{ name }}</h2>
-                <p>Artist: {{ artist }}</p>
+            <div class="song-info-feed">
+                <a href ='{{url}}'><h2>{{ name }}</h2></a>
+                <p>Artist: {{ artist }}</p> 
+            
                 <div class="song-interaction">
                     <span class="likes">45 Likes</span>
-                    <button class="like-button">Like</button>
+                    <button class="like-button">Like
+                        <script>
+                            const likeButtons = document.querySelectorAll(".like-button");
+                        
+                            likeButtons.forEach((likeButton) => {
+                                let taskDone = false;
+                                const updateButton = () => {
+                                    if (taskDone) {
+                                        likeButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#f320c5" width="24px" height="24px"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54z"/></svg>';
+                                        likeButton.style.backgroundColor = 'transparent'; // Remove background color
+                                    } else {
+                                        likeButton.innerText = "Like";
+                                        likeButton.style.backgroundColor = ''; // Revert to default background color
+                                    }};
+                                const toggleLike = () => {
+                                    taskDone = !taskDone;
+                                    updateButton();
+                                };
+                                updateButton();
+            
+                                likeButton.addEventListener("click", toggleLike);
+                            });
+                        </script>
+                        
+                        
+                        
+                      </button>
                 </div>
                 <div class="comments-section">
                     <!-- Comments will be dynamically loaded here -->
-                    <input type="text" placeholder="Add a comment...">
+                    <input type="text" placeholder="&nbsp;Add a comment...">
                 </div>
             </div>
         </div>
@@ -62,5 +95,4 @@
     </div>
 
 </body>
-
 </html>
