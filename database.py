@@ -34,17 +34,16 @@ def addPost(data):
 
         cursor.execute(query, data)
         connection.commit()
+
+        cursor.close()
+        connection.close()
         
         return True
 
     except Exception as e:
         print("Error adding post into database:", e)
         return False
-    finally:
-        cursor.close()
-        connection.close()
-    
-# add user
+ 
 def addUser(username):
     try:
         connection = connect_db()
