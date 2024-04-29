@@ -91,6 +91,34 @@ def getMyPosts(username):
     finally:
         cursor.close()
         connection.close()
+
+def getFriendPosts(username):
+    try:
+        connection = connect_db()
+        cursor = connection.cursor()
+
+        # Query to select posts from friends
+        query = """
+        SELECT p.selection, p.description 
+        FROM posts p
+        INNER JOIN friends f ON p.userId = f.friend 
+        WHERE f.user = %s
+        """
+
+        cursor.execute(query, (username,))
+        posts = cursor.fetchall()
+
+        connection.commit()
+
+        return posts
+
+    except Exception as e:
+        print("Error getting friend posts from database:", e)
+        return []
+    finally:
+        cursor.close()
+        connection.close()
+
     
 def addFriend(user, friend):
     try:
