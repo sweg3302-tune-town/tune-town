@@ -91,7 +91,6 @@ body {
 
 .left, .right {
   margin-top: 5%;
-  flex: 1; 
   overflow-y: auto;
 }
 
@@ -111,7 +110,7 @@ body {
 
 .searchTitle h1 {
   text-align: center;
-  margin: auto;
+
 }
 
 .search-box {
@@ -121,6 +120,7 @@ body {
 
 .search-box form {
   margin: auto;
+  padding-top: 10px;
 }
 
 .search-box input[type="text"],
@@ -185,6 +185,8 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none; 
   border-radius: 25px;
+  margin-top: 10px;
+  
 }
 
 #searchResults::-webkit-scrollbar {
