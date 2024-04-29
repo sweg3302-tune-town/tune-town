@@ -50,6 +50,26 @@ def getManySongData(songs):
     songData = zip(pics, names, artists, previews, ids)
     return songData
 
+def getFriendSongData(songs):
+    names = []
+    pics = []
+    artists = []
+    previews = []
+    ids = []
+    descriptions = []
+    for song in songs:
+        names.append(song['name'])
+        previews.append(song['preview_url'])
+        for artist in song['artists']:
+            artists.append(artist['name'])
+            break # this makes sure only the first artist is appended
+        cover_art_url = song['album']['images'][0]['url'] if len(song['album']['images']) > 0 else None
+        pics.append(cover_art_url)
+        ids.append(song['id'])
+        descriptions.append
+    songData = zip(pics, names, artists, previews, ids)
+    return songData
+
 # --- routes ---
 @app.route('/')
 def index():
@@ -110,6 +130,24 @@ def feed():
     songData = getManySongData(recommendations)
     
     return render_template('feed.html', songData=songData)
+
+@app.route('/town')
+def town():
+
+    sp = spotipy.Spotify(auth=session['spotify_token_info']['access_token'])
+    userId = getUser()['id']
+    
+    tracks = []
+    descriptions = []
+    users = []
+    for song in getFriendPosts(userId):
+        tracks.append(sp.track(song[0]))
+        descriptions.append(song[1])
+        users.append(song[2])
+    friendPostsData = getManySongData(tracks)
+    data = zip(friendPostsData, descriptions, users)
+    
+    return render_template('town.html',  data=data)
 
 @app.route('/create', methods=['GET', 'POST'])
 def create():

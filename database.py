@@ -22,7 +22,6 @@ def connect_db():
 # - add user
 # - add post
 
-# add post
 def addPost(data):
     try:
         connection = connect_db()
@@ -98,7 +97,7 @@ def getFriendPosts(username):
 
         # Query to select posts from friends
         query = """
-        SELECT p.selection, p.description 
+        SELECT p.selection, p.description, p.userId
         FROM posts p
         INNER JOIN friends f ON p.userId = f.friend 
         WHERE f.user = %s
