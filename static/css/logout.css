@@ -1,3 +1,12 @@
+:root {
+    --background: #121619; /* Night */
+    --dark-color: #3f3573; /* Dark Indigo */
+    --primary: #665aa6; /* Main Indigo */
+    --dark-accent: #85756E; /* Dark Tan */
+    --light-accent: #e3d8c2; /* Light Tan */
+    --pop-of-color: #20A4F3;
+  }
+
 body {
     margin: 0;
     padding: 0;
@@ -5,7 +14,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #565656;
+    background-color: var(--background);
 }
 
 .container {
@@ -15,7 +24,7 @@ body {
 .logout-button {
     padding: 10px 20px;
     font-size: 18px;
-    background-color: #4CAF50;
+    background-color: var(--primary);
     /* Green button */
     color: #fff;
     border: none;
@@ -25,6 +34,6 @@ body {
 }
 
 .logout-button:hover {
-    background-color: #45a049;
+    background-color:var(--pop-of-color)
     /* Darker green on hover */
 }
