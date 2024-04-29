@@ -58,7 +58,7 @@
     <div class="top-songs">
     <h1>These are the top songs I have been listening to recently:</h1></div>
     <div class="song-cards">
-      {% for pic, name, artist, preview, id, url in topSongsData %}
+      {% for pic, name, artist, preview, id in topSongsData %}
       <div class="song-card">
         <div class="song-img">
           <audio class="musicPlayer" src="{{ preview }}"></audio>
@@ -69,7 +69,7 @@
             onclick="toggleAudio(this.previousElementSibling)"
           />
         </div>
-        <a href ='{{url}}'><h4>{{ name }}</h4></a>
+        <h4>{{ name }}</h4>
         <p>{{ artist }}</p>
       </div>
       {% endfor %}
@@ -78,7 +78,7 @@
     <div class="top-songs">
     <h1>Here are the songs I want you to check out:</h1></div>
     <div class="song-cards">
-      {% for pic, name, artist, preview, id, url in myPostsData %}
+      {% for pic, name, artist, preview, id in myPostsData %}
       <div class="song-card">
         <div class="song-img">
           <audio class="musicPlayer" src="{{ preview }}"></audio>
